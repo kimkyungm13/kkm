@@ -1,181 +1,274 @@
-$(function () {
-    //상단 메뉴
-    $(document).ready(function () {
-        $(window).scroll(function () {
-            if ($(this).scrollTop() === 0) {
-                $('#header').removeClass('skip');
-                $('.banner-group').removeClass('top');
-            } else {
-                $('#header').addClass('skip');
-                $('.banner-group').addClass('top');
-            }
-        });
-    });
-    // 캔버스 요소와 컨텍스트 설정
-    const canvases = [
-        { canvas: document.querySelector("#crown"), width: 1920, height: 610 },
-        { canvas: document.querySelector("#duo"), width: 1920, height: 1080 },
-        { canvas: document.querySelector("#custom"), width: 1920, height: 1080 },
-        { canvas: document.querySelector("#active"), width: 1920, height: 1080 }
-    ];
 
-    // 이미지 프레임 수 설정
-    const frameCounts = [178, 100, 178, 178];
+window.onload = function () {
+    history.scrollRestoration = "manual";
 
-    // 이미지 로딩 함수 정의
-    const currentFrames = [
-        index => `/assets/landings/connected-e4/01.crown/${(index + 1).toString().padStart(5, '0')}.jpg`,
-        index => `/assets/landings/connected-e4/02.duo/${(index + 1).toString().padStart(5, '0')}.jpg`,
-        index => `/assets/landings/connected-e4/04.custom/${(index + 1).toString().padStart(5, '0')}.jpg`,
-        index => `/assets/landings/connected-e4/05.sport/${(index + 1).toString().padStart(5, '0')}.jpg`
-    ];
+    /** LENIS */
+    const lenis = new Lenis()
+    lenis.on('scroll', (e) => {
+    })
+    lenis.on('scroll', ScrollTrigger.update)
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000)
+    })
+    gsap.ticker.lagSmoothing(0)
+    gsap.defaults({
+        ease: "ease"
+    })
 
-    // 이미지 배열 초기화
-    const images = [];
-    for (let i = 0; i < canvases.length; i++) {
-        images.push([]);
-    }
 
-    // 애니메이션을 위한 객체 초기화
-    const ani1 = { frame: 0 };
-    const ani2 = { frame: 0 };
-    const ani3 = { frame: 0 };
-    const ani4 = { frame: 0 };
-    const animators = [ani1, ani2, ani3, ani4];
-
-    // 각 캔버스 및 이미지 배열에 대한 초기화
-    for (let i = 0; i < canvases.length; i++) {
-        const canvas = canvases[i].canvas;
-        const context = canvas.getContext("2d");
-        canvas.width = canvases[i].width;
-        canvas.height = canvases[i].height;
-
-        for (let j = 0; j < frameCounts[i]; j++) {
-            const img = new Image();
-            img.src = currentFrames[i](j);
-            images[i].push(img);
+    /** header scroll */
+    let lastScrollY = 0;
+    window.addEventListener("scroll", () => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY > lastScrollY) {
+            gsap.to("#header", { y: "-100%" });
+        } else {
+            gsap.to("#header", { y: "0%" });
         }
+        lastScrollY = currentScrollY;
+    });
 
-        // GSAP 애니메이션 설정
-        gsap.to(animators[i], {
-            frame: frameCounts[i] - 1,
-            snap: "frame",
-            ease: "none",
-            scrollTrigger: {
-                trigger: '.canvas-wrap',
-                scrub: 0.5,
-                start: '0% 60%',
-                end: '+=2000%',
-                // markers: true
-            },
-            onUpdate: () => render(i) // 콜백 함수 설정
-        });
-
-        images[i][0].onload = () => render(i);
-    }
-
-    // 렌더링 함수 정의
-    function render(index) {
-        const canvas = canvases[index].canvas;
-        const context = canvas.getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.drawImage(images[index][animators[index].frame], 0, 0);
-    }
-
-
-    /** h2.title scale 반복 */
-    const scaleElements = document.querySelectorAll('[data-txt="scale"]');
-
-    scaleElements.forEach(element => {
-        gsap.from(element.querySelectorAll('span'), {
-            scrollTrigger: {
-                trigger: element,
-                scrub: 0,
-                start: '0 90%',
-                end: "+=100%",
-                // markers: true,
-            },
-            delay: 0.4,
-            stagger: 0.5,
-            opacity: 0,
-            scale: 5
+    /**
+     * mouse cursor
+     */
+    gsap.set(".custom-cursor", { xPercent: -50, yPercent: -50 });
+    document.addEventListener("mousemove", function (e) {
+        gsap.to(".custom-cursor", {
+            duration: 0.2,
+            left: e.pageX,
+            top: e.pageY,
+            ease: "power2.out"
         });
     });
 
-    /**배경이미지 변경 */
-    ScrollTrigger.create({
-        trigger: `[data-theme="white"]`,
-        start: "0% 0%",
-        end: "100% 50%",
-        // markers:true,
-        toggleClass: {
-            targets: "body",
-            className: "white",
-        },
-    })
-    /** sc-features list 반복 */
-    const list = document.querySelectorAll('.sc-features');
-    list.forEach(element => {
-        gsap.from(element.querySelectorAll('.list li,.title-wrap,.list >.btn-arrow'), {
-            scrollTrigger: {
-                trigger: element,
-                scrub: 0,
-                start: '0 60%',
-                end: "100% 100%",
-                markers: true,
-            },
-            stagger: 0.5,
-            opacity: 0,
-            yPercent: 50
+    const links = document.querySelectorAll('.btn-link');
+    links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            gsap.to('.custom-cursor', {
+                width: 20,
+                height: 20,
+                borderColor: 'blue',
+                backgroundColor: 'yellow',
+                duration: 0.2,
+                ease: "power2.out"
+            });
+        });
+
+        link.addEventListener('mouseleave', () => {
+            gsap.to('.custom-cursor', {
+                width: 10,
+                height: 10,
+                borderColor: 'black',
+                backgroundColor: 'transparent',
+                duration: 0.2,
+                ease: "power2.out"
+            });
+        });
+    });
+    const follower = document.querySelector(".follower");
+    gsap.set(follower, {
+        opacity: 1,
+        scale: 0,
+        transformOrigin: "center center",
+        xPercent: -50,
+        yPercent: -50
+    });
+    const xTo = gsap.quickTo(follower, "x", { ease: "power3" });
+    const yTo = gsap.quickTo(follower, "y", { ease: "power3" });
+
+    const box = document.querySelector(".sc-intro");
+    const boxPosition = box.getBoundingClientRect().x;
+    const boxLeft = box.getBoundingClientRect().x;
+    const boxTop = box.offsetTop;
+
+    box.addEventListener("mousemove", (e) => {
+        console.log(e.pageY, e.clientY, boxTop);
+        xTo(e.clientX - boxLeft);
+        yTo(e.pageY - boxTop);
+    });
+
+    box.addEventListener("mouseenter", () => {
+        gsap.to(follower, {
+            duration: 0.3,
+            opacity: 1,
+            scale: 1,
+            transformOrigin: "center center"
         });
     });
 
-    /** intro h2 */
-    introTl = gsap.timeline();
-    introTl.from('.sc-intro .main-title span', {
+    box.addEventListener("mouseleave", () => {
+        gsap.to(follower, {
+            duration: 0.3,
+            opacity: 0,
+            scale: 0,
+            transformOrigin: "center center"
+        });
+    });
+
+    /** odometer count */
+    $('.odometer').html(100);
+    const loader = gsap.timeline({
+        onComplete: () => {
+            introTl = gsap.timeline({});
+            introTl.to('.sc-intro .title .line', {
+                transform: ' translateY(0)',
+                stagger: 0.2,
+                autoAlpha: 1
+            }).to('.btn-link', {
+                opacity: 1
+            })
+        }
+    });
+    loader.to('.loader', {
+        duration: 2,
+        autoAlpha: 1
+    }, 'a').to('.loader', {
+        yPercent: 100,
+        delay: 0.5
+    }, 'a+=2').to('.loader', {
+        autoAlpha: 0
+    });
+
+    /** sc-intro */
+    const textElement = document.querySelector('.sc-intro .title');
+    const headTxt = new SplitType('.sc-intro .title .line', { types: 'words, chars', });
+    const words = textElement.querySelectorAll('.sc-intro .word');
+    words.forEach(word => {
+        if (word.textContent.trim() === 'impactful') {
+            word.classList.add('IvyPresto');
+        }
+    });
+
+    /** sc-about */
+    const aboutTxt = new SplitType('.sc-about .group-sub h3,.sc-about .group-sub h4', { types: 'lines,words', });
+    gsap.from('.sc-about .group-title span,.sc-about .group-sub h3 .word,.sc-about .group-sub h4 .word', {
+        yPercent: 100,
         stagger: 0.5,
-        opacity: 0,
-        scale: 3
-    }, 'a').from($('.sc-intro h2'), {
-        yPercent: 3,
-        opacity: 0
-    }, 'a').from($('.btn-play'), {
-        opacity: 0
-    });
-
-    gsap.to('.sc-design .canvas-wrap ', {
+        duration: 0.4,
         scrollTrigger: {
-            trigger: '.sc-design',
-            start: '0% 50%',
-            scrub: 1,
-            toggleClass: {
-                targets: 'body',
-                className: 'white'
-            }
-        },
-        'clip-path': 'inset(0% 3% 0% 3%)',
-    })
-    /**sc-tech 텍스트  */
-    txtTl = gsap.timeline();
-    txtTl.to($('.sc-tech .desc-wrap p'), {
-        scrollTrigger: {
-            trigger: '.sc-tech .canvas-wrap',
-            start: '0 80%',
+            trigger: '.sc-about',
+            start: '50% 100%',
             end: '100% 100%',
             scrub: 0,
+            // markers: true,
+            once: true
+        }
+    })
+
+
+    serviceTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.sc-service',
+            start: '0% 100%',
+            end: '80% 100%',
+            scrub: 0,
             // markers: true
+        }
+    })
+    // consulting designing developing
+    serviceTl.to('.sc-service .consulting', {
+        duration: 1,
+        transform: 'translateY(0)'
+    }, 'a').to('.sc-service .designing', {
+        transform: 'translateY(0)'
+    }, 'a+=0.5').to('.sc-service .developing', {
+        transform: 'translateY(0)'
+    }, 'a+=1')
+    const descTxt = new SplitType('.sc-desc .desc', { types: 'words, chars', });
+
+    /** section 02 sc-mmodule */
+    gsap.to('.sc-desc .desc-wrap .desc .word .char', {
+        scrollTrigger: {
+            trigger: '.sc-desc .desc-wrap',
+            start: '0% 50%',
+            end: '100% 100%',
+            scrub: 0,
         },
         stagger: 1,
-        autoAlpha: 1,
-        yPercent: 0,
-    },)
+        color: "#000",
+    });
+    gsap.to('.sc-desc .title-wrap .first,.sc-desc .title-wrap .second', {
+        scrollTrigger: {
+            trigger: ".sc-desc .title-wrap",
+            start: "10% 100%",
+            end: "100% 0%",
+            scrub: 0,
+            // markers: true,
+            invalidateOnRefresh: true,
 
-    /** product */
-    $('.sc-product .item-list-name a').click(function (e) {
-        e.preventDefault();
-        size = $(this).data('size');
-        $('.sc-product .item-list-name a').removeClass('on');
-        $(this).addClass('on');
-        $(size).addClass('show').siblings().removeClass('show');
+        },
+        '--x': '0%',
+        // x: function () {
+        //     return window.innerWidth;
+        // }
     })
-});
+    workTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.sc-work',
+            start: '00% 00%',
+            end: '100% 100%',
+            scrub: 0,
+            // markers: true,
+        },
+    });
+    workTl.to('.group-work .item01', {
+        yPercent: 0,
+    }).to('.group-work .item02', {
+        yPercent: -100,
+        y: 20,
+        transform: 'scale(0.98)'
+    }).to('.group-work .item03', {
+        yPercent: -200,
+        y: 20 * 2,
+    }).to('.group-work .item04', {
+        yPercent: -300,
+        y: 20 * 3
+    })
+    // gsap.to('.sc-desc .title-wrap .second', {
+    //     scrollTrigger: {
+    //         trigger: ".sc-desc .title-wrap",
+    //         start: "20% 100",
+    //         end: "100% 0%",
+    //         scrub: 1,
+    //         markers: true,
+    //         invalidateOnRefresh: true,
+
+    //     },
+    //     xPercent: -100,
+    //     // x: function () {
+    //     //     return window.innerWidth;
+    //     // }
+    // })
+    /**
+     * sc-desc
+     *
+     */
+    // descTl = gsap.timeline({
+    //     scrollTrigger: {
+    //         trigger: '.sc-desc .title-wrap',
+    //         start: '20% 100%',
+    //         end: '100% 100%',
+    //         markers: true,
+    //         scrub: 0,
+    //     }
+    // });
+    // descTl.from('.sc-desc .title-wrap .first', { xPercent: -50 }, 'a')
+    //     .from('.sc-desc .title-wrap .second', { xPercent: 50 }, 'a')
+    projectTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.sc-project',
+            start: '50% 100%',
+            end: '150% 100%',
+            scrub: 0,
+            // markers: true,
+        },
+    });
+    projectTl.to('.list-area:first-child', {
+        xPercent: 1
+    }, 'a').to('.list-area:last-child', {
+        xPercent: -1
+    }, 'a')
+} //end
+
+
+

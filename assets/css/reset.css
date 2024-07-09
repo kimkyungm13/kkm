@@ -16,11 +16,6 @@
     --bg-color: #000
 }
 
-:root[data-theme="white"] {
-    --color-title: #000;
-    --bg-color: #fff
-}
-
 :root {
     -webkit-tap-highlight-color: transparent;
     -webkit-text-size-adjust: 100%;
@@ -44,6 +39,7 @@ canvas,
 svg {
     display: block;
     max-width: 100%;
+    object-fit: cover;
 }
 
 button {
@@ -73,20 +69,21 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #000;
-    font-family: 'Apax-TAG-Heuer', Arial, sans-serif;
     font-size: 10px;
     line-height: 1.5;
     text-rendering: optimizeLegibility;
 }
 
 body {
+    font-family: "TWKEverett", Arial, sans-serif;
     /* background-color: #fff; */
     color: #000;
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: normal;
     line-height: 1.5;
     margin: 0;
     text-align: left;
+    --header-primary-height: 70px
 }
 
 *:focus {

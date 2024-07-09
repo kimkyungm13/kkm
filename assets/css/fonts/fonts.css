@@ -8,6 +8,30 @@
 
 @font-face {
     font-display: swap;
+    font-family: TWKEverett;
+    font-style: normal;
+    font-weight: 400;
+    src: url(./c074ebc4f8a60050-s.p.woff2) format("woff2")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: IvyPresto;
+    font-style: normal;
+    font-weight: 400;
+    src: url(./9431a58d2dabef30-s.p.woff2) format("woff2")
+}
+
+@font-face {
+    font-display: swap;
+    font-family: clash;
+    font-style: normal;
+    font-weight: 400;
+    src: url(./ClashDisplay-Medium.woff2) format("woff2")
+}
+
+@font-face {
+    font-display: swap;
     font-family: Apax-TAG-Heuer-Woff2;
     font-style: normal;
     font-weight: 400;
