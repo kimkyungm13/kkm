@@ -51,8 +51,6 @@ body.noscroll {
     display: flex;
     align-items: center;
     overflow: hidden;
-
-
     font-weight: bold;
     font-size: 50px;
     transform: translateY(100%) scale(1);

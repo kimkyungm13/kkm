@@ -27,19 +27,112 @@ window.onload = function () {
         lenis.scrollTo('#footer')
     })
 
+
+
+    const introBg = gsap.timeline({
+        onStart: () => {
+            // 애니메이션이 시작될 때 스크롤 방지
+            document.querySelector('#wrapper').addEventListener('wheel', preventScroll, { passive: false });
+        },
+        onComplete: () => {
+            // 애니메이션이 끝날 때 스크롤 허용
+            document.querySelector('#wrapper').removeEventListener('wheel', preventScroll);
+            lenis.start();  // lenis의 멈춤 기능 호출
+
+        },
+        // onReverseComplete: () => {
+        //     // 애니메이션이 끝날 때 스크롤 허용
+        //     document.querySelector('#wrapper').removeEventListener('wheel', preventScroll);
+        // }
+    });
+
+    function preventScroll(e) {
+        e.preventDefault();
+        lenis.stop();  // lenis의 멈춤 기능 호출
+    }
+
+    introBg.set('.sc-intro .intro-title', {
+        duration: 0.2
+    }).to('.sc-intro .intro-txt .title .line', {
+        transform: 'translateY(0)',
+        stagger: 0.2,
+        autoAlpha: 1,
+        // delay: 1
+    }).to('.sc-intro .intro-title', {
+        duration: 1,
+        '--transform': 'translateX(100%)',
+    }).from('.sc-intro .logo-txt', {
+        yPercent: 100
+    }).to('#header', {
+        autoAlpha: 1,
+    });
+
+    gsap.to('.sc-intro .logo-wrap, .sc-intro .intro-txt h2', {
+        scrollTrigger: {
+            trigger: '.sc-intro',
+            start: '00% 0%',
+            end: '100% 80%',
+            scrub: 0,
+        },
+        '--left': '0'
+    });
+
+    // const conWrap = document.getElementById('main');
+    // const $body = document.querySelector('body');
+    // function preventScroll(e) {
+    //     e.preventDefault();
+    //     lenis.stop();
+    // }
+    // conWrap.addEventListener('wheel', preventScroll, { passive: false })
+    // conWrap.addEventListener('wheel', function () {
+    //     conWrap.removeEventListener('wheel', preventScroll, { passive: false })
+    // })
+    // // let firstScroll = true; //초반세팅
+    // // $body.addEventListener('wheel', function (e) {
+    // //     if (e.deltaY > 0 && firstScroll == true) {
+    // //         $('.section1').addClass('down');
+    // //         setTimeout(() => {
+    // //             main.removeEventListener('wheel', preventScroll, { passive: false });
+    // //             firstScroll = false;
+    // //         }, 4000);
+    // //     }
+    // // });
     /** header scroll */
     let lastScrollY = 0;
     window.addEventListener("scroll", () => {
         const currentScrollY = window.scrollY;
         const introH = $('.sc-intro').height();
         if (currentScrollY < introH) {
-            gsap.to("#header .logo a", { y: "100%", autoAlpha: 0 });
+            gsap.to("#header .logo a", { y: "100%", autoAlpha: 0, 'transform': 'scale(1)' });
         } else {
             gsap.to("#header .logo a", { y: "0%", autoAlpha: 1 });
         }
         lastScrollY = introH;
     });
-
+    /** logo 사이즈 sc-work섹션에서 작아지게 */
+    ScrollTrigger.create({
+        trigger: `.sc-work`,
+        start: "0% 0",
+        end: "100% 0%",
+        scrub: 0,
+        duration: 0.2,
+        onEnter: () => gsap.to("#header .logo a", {
+            'scale': '0.5',
+            'transform-origin': 'left center'
+        }),
+        onEnterBack: () => gsap.to("#header .logo a", {
+            'scale': '0.5',
+            'transform-origin': 'left center'
+        }),
+        onLeave: () => gsap.to("#header .logo a", {
+            'scale': '1',
+            // 'transform-origin': 'left top'
+        }),
+        onLeaveBack: () => gsap.to("#header .logo a", {
+            'scale': '1',
+            // 'transform-origin': 'left top'
+        })
+    })
     /**
      * mouse cursor
      */
@@ -144,35 +237,35 @@ window.onload = function () {
     /** sc-intro */
 
     const headTxt = new SplitType('.sc-intro .title .line-wrap .line', { types: ' words, chars', });
-    const introBg = gsap.timeline();
-    introBg.set('.sc-intro .intro-title', {
-        duration: 0.2
-    }).to('.sc-intro .intro-txt .title .line ', {
-        transform: ' translateY(0)',
-        stagger: 0.2,
-        autoAlpha: 1,
-        // delay: 1
-    }).to('.sc-intro .intro-title', {
-        duration: 1,
-        '--transform': 'translateX(100%)',
-    },).from('.sc-intro .logo-txt', {
-        yPercent: 100
-    },).to('#header', {
-        autoAlpha: 1,
-    })
-    const introTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.sc-intro',
-            start: '00% 0%',
-            end: '100% 80%',
-            scrub: 0,
-            // markers: true,
+    // const introBg = gsap.timeline();
+    // introBg.set('.sc-intro .intro-title', {
+    //     duration: 0.2
+    // }).to('.sc-intro .intro-txt .title .line ', {
+    //     transform: ' translateY(0)',
+    //     stagger: 0.2,
+    //     autoAlpha: 1,
+    //     // delay: 1
+    // }).to('.sc-intro .intro-title', {
+    //     duration: 1,
+    //     '--transform': 'translateX(100%)',
+    // },).from('.sc-intro .logo-txt', {
+    //     yPercent: 100
+    // },).to('#header', {
+    //     autoAlpha: 1,
+    // })
+    // const introTl = gsap.timeline({
+    //     scrollTrigger: {
+    //         trigger: '.sc-intro',
+    //         start: '00% 0%',
+    //         end: '100% 80%',
+    //         scrub: 0,
+    //         // markers: true,
 
-        }
-    });
-    introTl.to('.sc-intro .logo-wrap,.sc-intro .intro-txt h2', {
-        '--left': '0'
-    },)
+    //     }
+    // });
+    // introTl.to('.sc-intro .logo-wrap,.sc-intro .intro-txt h2', {
+    //     '--left': '0'
+    // },)
     /** sc-about */
     const aboutTxt = new SplitType('.sc-about .group-sub h3,.sc-about .group-sub h4', { types: 'lines,words', });
     gsap.from('.sc-about .group-title span,.sc-about .group-sub h3 .word,.sc-about .group-sub h4 .word', {
@@ -256,7 +349,7 @@ window.onload = function () {
     /** section 02 sc-mmodule */
     gsap.to('.sc-desc .desc-wrap .desc .word .char', {
         scrollTrigger: {
-            trigger: '.sc-desc .desc-wrap',
+            trigger: '.sc-desc ',
             start: '0% 50%',
             end: '100% 100%',
             scrub: 0,
@@ -281,15 +374,7 @@ window.onload = function () {
     })
 
 
-    workTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.sc-work',
-            start: '0% 0%',
-            end: '100% 100%',
-            scrub: 0,
-            // markers: true,
-        },
-    });
+
     // gsap.to('#work', {
     //     scrollTrigger: {
     //         trigger: '#work',
@@ -339,11 +424,13 @@ window.onload = function () {
     //     y: 20 * 3
     // })
     ScrollTrigger.create({
-        trigger: '.sc-work .sticky',
+        trigger: '.sc-work .work-wrap',
         start: '0% 0%',
         end: '100% 100%',
+        scrub: 0,
+        markers: true,
         onUpdate: function (self) {
-            totalLength = $('.sc-work .stic .work').length;
+            totalLength = $('.sc-work .thumb-wrap .thumb').length;
             idx = Math.round(self.progress * (totalLength - 1))
             currItem = $('.sc-work .stic .work.show');
             newItem = $('.sc-work .stic .work').eq(idx);

@@ -722,12 +722,14 @@ body.block-scroll {
 
 /* sc-work */
 .sc-work {
-    /* height: 100vh; */
+    height: auto;
     position: relative;
+    margin-bottom: 20vh;
+    max-height: fit-content;
 }
 
 .sc-work .sticky {
-    display: flex;
+    /* height: 700vh; */
 }
 
 .sc-work .title {
@@ -748,6 +750,11 @@ body.block-scroll {
     text-align: center;
     font-weight: bold;
     font-family: 'mont';
+}
+
+.sc-work .work-wrap {
+    position: relative;
+    display: flex;
 }
 
 .sc-work .stic {
