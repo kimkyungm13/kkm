@@ -110,7 +110,7 @@ body.block-scroll {
     flex-wrap: nowrap;
     bottom: 0;
     --left: -45vw;
-    left: var(--left)
+    left: var(--left);
 }
 
 .sc-intro .logo-txt {
@@ -132,9 +132,11 @@ body.block-scroll {
     position: absolute;
     left: 0;
     width: 100%;
-    height: 100%;
+    /* height: clamp(80px, 16.9vw, 300px); */
+    height: 300px;
     background-color: #fff;
     z-index: 2;
+    bottom: 0;
 }
 
 /*
@@ -197,10 +199,11 @@ body.block-scroll {
 .sc-intro .intro-txt h2:before {
     content: "";
     position: absolute;
-    top: -60px;
+    top: 0px;
     left: var(--left);
     width: 500px;
-    height: 378px;
+    /* height: clamp(70px, 19.16vw, 342px); */
+    height: 282px;
     background-color: #fff;
     z-index: -1;
 }
@@ -674,10 +677,28 @@ body.block-scroll {
     display: flex;
     padding: 50px 10vw 250px;
     gap: 120px;
+    align-items: flex-start;
+}
+
+.sc-desc .about-txt h2 {
+    overflow: hidden;
+}
+
+.sc-desc .about-txt h2 span {
+    width: 200px;
+    transform: translateY(100%);
+    display: block;
 }
 
 .sc-desc .about-txt p {
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #7c7c7c;
+}
+
+.sc-desc .about-txt p em {
+    font-weight: bold;
+    color: #000
 }
 
 .sc-desc .title-wrap {
@@ -792,17 +813,24 @@ body.block-scroll {
 
 .sc-work .work .num,
 .sc-work .work h3,
-.sc-work .work h4 {
+.sc-work .work h4,
+.sc-work .work h5 {
     transform: translateY(100%);
     transition: transform 0.7s;
     display: block;
+    text-transform: uppercase;
 }
 
 
 .sc-work .work.show .num,
 .sc-work .work.show h3,
-.sc-work .work.show h4 {
+.sc-work .work.show h4,
+.sc-work .work.show h5 {
     transform: translateY(0);
+}
+
+.sc-work .work.show h3 a {
+    transition: all 0.3s
 }
 
 .sc-work .work .title-area {
@@ -853,6 +881,12 @@ body.block-scroll {
     transition-delay: 0.4s;
 }
 
+.sc-work .work h5 {
+    font-size: 18px;
+    text-align: center;
+    transition-delay: 0.6s;
+}
+
 .sc-work .thumb-wrap {
     position: relative;
     width: 50%;
@@ -874,10 +908,68 @@ body.block-scroll {
 }
 
 
+.project-cursor {
+    position: relative;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+    cursor: none;
+    color: #fff;
+    mix-blend-mode: difference;
+}
 
-/* .sc-work .work .thumb:hover img {
-    transform: scale(1.1);
-} */
+.project-cursor.on {
+    opacity: 1;
+}
+
+
+.project-cursor .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+}
+
+
+.project-cursor .text {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    transition: font 0.3s;
+    opacity: 0.5;
+}
+
+.project-cursor .text:after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    transition: transform 0.5s;
+}
+
+.project-cursor.red .text {
+    font-size: 22px;
+    opacity: 1;
+    font-weight: bold;
+    z-index: 3;
+}
+
+.project-cursor.red .text:after {
+    background: #ff1074;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 50%;
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(10);
+}
 
 
 
@@ -888,10 +980,9 @@ body.block-scroll {
 .sc-project .list-group {
     display: flex;
     flex-direction: column;
-
     place-content: center;
     align-items: center;
-    background-color: var(--token-e271bf60-69fe-41b5-80a4-630b52f7c30a, #f2f2f2);
+    background-color: #f2f2f2;
     box-shadow: rgb(0, 0, 0) 0px 35px 70px 0px;
     display: flex;
     flex: 0 0 auto;
@@ -994,11 +1085,12 @@ body.block-scroll {
 
 
 .sc-sub {
-    padding: 150px 0;
+    padding: 150px 100px;
+    overflow: hidden;
 }
 
 .sc-sub .title {
-    margin-left: 35vw;
+    margin-left: 22vw;
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -1029,9 +1121,10 @@ body.block-scroll {
 
 .sc-sub .work-list li .item {
     display: flex;
+    position: relative;
     gap: 100px;
     height: 190px;
-    margin-left: 35vw;
+    margin-left: 22vw;
     justify-content: flex-end;
 }
 
@@ -1072,14 +1165,15 @@ body.block-scroll {
     transform: scaleY(1);
 }
 
-.sc-sub .work-list li .item {
-    position: relative;
+.sc-sub .work-list li .item .num {
+    font-weight: bold;
+    font-size: 19px;
 }
 
 .sc-sub .work-list li picture {
     position: absolute;
     top: 50%;
-    left: 8vw;
+    left: 5vw;
     opacity: 0;
     z-index: 3;
     width: 250px;

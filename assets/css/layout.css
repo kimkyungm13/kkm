@@ -4,7 +4,8 @@
 /* @import './fonts/fonts.css'; */
 
 body {
-    transition: background 0.5s
+    transition: background 0.5s;
+    overflow-y: hidden;
 }
 
 body.light {
@@ -19,7 +20,7 @@ body.noscroll {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
+    /* right: 0; */
     height: var(--header-primary-height);
     /* background: #f4f4f4; */
     z-index: 10;
@@ -27,7 +28,8 @@ body.noscroll {
     color: #fff;
     pointer-events: none;
     opacity: 0;
-    visibility: hidden
+    visibility: hidden;
+    width: 100%;
 }
 
 #header .nav {

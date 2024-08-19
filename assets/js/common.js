@@ -210,62 +210,12 @@ window.onload = function () {
         });
     });
 
-    // /** odometer count */
-    // $('.odometer').html(100);
-    // const loader = gsap.timeline({
-    //     onComplete: () => {
-    //         introTl = gsap.timeline({});
-    //         introTl.to('.sc-intro .title .line', {
-    //             transform: ' translateY(0)',
-    //             stagger: 0.2,
-    //             autoAlpha: 1
-    //         }).to('.btn-link', {
-    //             opacity: 1
-    //         })
-    //     }
-    // });
-    // loader.to('.loader', {
-    //     duration: 2,
-    //     autoAlpha: 1
-    // }, 'a').to('.loader', {
-    //     yPercent: 100,
-    //     delay: 0.5
-    // }, 'a+=2').to('.loader', {
-    //     autoAlpha: 0
-    // });
 
     /** sc-intro */
-
     const headTxt = new SplitType('.sc-intro .title .line-wrap .line', { types: ' words, chars', });
-    // const introBg = gsap.timeline();
-    // introBg.set('.sc-intro .intro-title', {
-    //     duration: 0.2
-    // }).to('.sc-intro .intro-txt .title .line ', {
-    //     transform: ' translateY(0)',
-    //     stagger: 0.2,
-    //     autoAlpha: 1,
-    //     // delay: 1
-    // }).to('.sc-intro .intro-title', {
-    //     duration: 1,
-    //     '--transform': 'translateX(100%)',
-    // },).from('.sc-intro .logo-txt', {
-    //     yPercent: 100
-    // },).to('#header', {
-    //     autoAlpha: 1,
-    // })
-    // const introTl = gsap.timeline({
-    //     scrollTrigger: {
-    //         trigger: '.sc-intro',
-    //         start: '00% 0%',
-    //         end: '100% 80%',
-    //         scrub: 0,
-    //         // markers: true,
 
-    //     }
-    // });
-    // introTl.to('.sc-intro .logo-wrap,.sc-intro .intro-txt h2', {
-    //     '--left': '0'
-    // },)
+
+
     /** sc-about */
     const aboutTxt = new SplitType('.sc-about .group-sub h3,.sc-about .group-sub h4', { types: 'lines,words', });
     gsap.from('.sc-about .group-title span,.sc-about .group-sub h3 .word,.sc-about .group-sub h4 .word', {
@@ -282,50 +232,8 @@ window.onload = function () {
         }
     })
 
-    // ScrollTrigger.create({
-    //     trigger: `.sc-intro`,
-    //     start: "100% 0",
-    //     end: "100% 100%",
-    //     scrub: 0,
-    //     onEnter: () => gsap.to(".logo a", { autoAlpha: 1, y: 0 }),
-    //     onLeave: () => gsap.to(".logo a", { autoAlpha: 1, y: 0 }),
-    //     onEnterBack: () => gsap.to(".logo a", { autoAlpha: 1, yPercent: 100, backgroundColor: '#000' }),
-    //     // onLeaveBack: () => gsap.to(".logo a", { autoAlpha: 1, yPercent: 100, backgroundColor: '#0ff' }),
-    //     toggleActions: "play play play play",
-    //     toggleClass: {
-    //         targets: "#header .logo a",
-    //         className: "none",
-    //     },
-    //     markers: true,
 
-    // })
-    // document.addEventListener('scroll', function () {
-    //     const headerLogoLink = document.querySelector('#header .logo a');
-    //     const introSection = document.querySelector('sc-intro');
-    //     const introSectionHeight = introSection.offsetHeight;
-    //     const scrollPosition = window.scrollY;
-
-    //     if (scrollPosition >= introSectionHeight) {
-    //         headerLogoLink.addClass('none');
-    //         lenis.stop()
-
-    //     } else {
-    //         headerLogoLink.removeClass('none');
-    //         lenis.start()
-
-    //     }
-
-    // });
-    // gsap.to('#header .logo a', {
-    //     scrollTrigger: {
-    //         trigger: '.sc-desc',
-    //         start: '0% 0%',
-    //         end: '100% 100%',
-
-    //     },
-    //     autoAlpha: 1,
-    //     y: 0
-    // })
+    /** sc-service */
     serviceTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.sc-service',
@@ -335,7 +243,6 @@ window.onload = function () {
             // markers: true
         }
     })
-    // consulting designing developing
     serviceTl.to('.sc-service .consulting', {
         duration: 1,
         transform: 'translateY(0)'
@@ -346,7 +253,8 @@ window.onload = function () {
     }, 'a+=1')
     const descTxt = new SplitType('.sc-desc .desc', { types: 'words, chars', });
 
-    /** section 02 sc-mmodule */
+
+    /** sc-desc */
     gsap.to('.sc-desc .desc-wrap .desc .word .char', {
         scrollTrigger: {
             trigger: '.sc-desc ',
@@ -365,28 +273,24 @@ window.onload = function () {
             scrub: 0,
             // markers: true,
             invalidateOnRefresh: true,
-
         },
         '--x': '0%',
-        // x: function () {
-        //     return window.innerWidth;
-        // }
+    })
+
+    gsap.to('.sc-desc .about-txt h2 span', {
+        scrollTrigger: {
+            trigger: '.sc-desc .about-txt',
+            start: '0% 100%',
+            end: '100% 100%',
+            scrub: 0,
+            markers: true
+        },
+        y: 0
     })
 
 
+    /** sc-work */
 
-    // gsap.to('#work', {
-    //     scrollTrigger: {
-    //         trigger: '#work',
-    //         start: '0 50%',
-    //         end: '100% 100%',
-    //         scrub: 0,
-    //         toggleClass: {
-    //             targets: '#work',
-    //             className: 'light'
-    //         }
-    //     }
-    // })
     gsap.to('.sc-work .title h2 span', {
         scrollTrigger: {
             trigger: '.sc-work .title',
@@ -397,38 +301,12 @@ window.onload = function () {
         },
         'transform': ' scale(0.35, 0.35)',
     },)
-    // .to('.sc-work .item01', {
-    //     yPercent: -100,
-    // },'a')
-    // .to('.sc-work .item02', {
-    //     yPercent: -100,
-    //     y:100,
-    // })
-    // .to('.sc-work .item03', {
-    //     yPercent: -100,
-    //     y:200,
-    // })
-    // .to('.sc-work .item04', {
-    //     yPercent: -100,
-    //     y:300,
-    // })
-    // .to('.group-work .item02', {
-    //     yPercent: -100,
-    //     y: 20,
-    //     transform: 'scale(0.98)'
-    // }).to('.group-work .item03', {
-    //     yPercent: -200,
-    //     y: 20 * 2,
-    // }).to('.group-work .item04', {
-    //     yPercent: -300,
-    //     y: 20 * 3
-    // })
     ScrollTrigger.create({
         trigger: '.sc-work .work-wrap',
         start: '0% 0%',
         end: '100% 100%',
         scrub: 0,
-        markers: true,
+        // markers: true,
         onUpdate: function (self) {
             totalLength = $('.sc-work .thumb-wrap .thumb').length;
             idx = Math.round(self.progress * (totalLength - 1))
@@ -439,20 +317,28 @@ window.onload = function () {
         }
     });
 
-    projectTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.sc-project',
-            start: '50% 100%',
-            end: '150% 100%',
-            scrub: 0,
-            // markers: true,
-        },
-    });
-    projectTl.to('.list-area:first-child', {
-        xPercent: 1
-    }, 'a').to('.list-area:last-child', {
-        xPercent: -1
-    }, 'a')
+
+
+    $('.sc-work .work-wrap').mousemove(function (e) {
+        const projectCursor = $('.project-cursor [data-target="cursor"]');
+        gsap.to(projectCursor, {
+            x: e.clientX + 'px',
+            y: e.clientY + 'px'
+        })
+    })
+    $('.sc-work .work-wrap').mouseover(function () {
+        $('.sc-work .project-cursor').addClass('on');
+    })
+    $('.sc-work .work-wrap').mouseleave(function () {
+        $('.sc-work .project-cursor').removeClass('on');
+    })
+    $('.sc-work .work h3 a').mouseover(function () {
+        $('.sc-work .project-cursor').addClass('red')
+    })
+    $('.sc-work .work h3 a').mouseleave(function () {
+        $('.sc-work .project-cursor').removeClass('red')
+    })
+
 
     //project hover
     $('.sc-sub .work-list li').hover(function () {
@@ -500,6 +386,22 @@ window.onload = function () {
             });
         });
     });
+    /** sc-project */
+    projectTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: '.sc-project',
+            start: '50% 100%',
+            end: '150% 100%',
+            scrub: 0,
+            // markers: true,
+        },
+    });
+    projectTl.to('.list-area:first-child', {
+        xPercent: 1
+    }, 'a').to('.list-area:last-child', {
+        xPercent: -1
+    }, 'a')
+
 
     lastTl = gsap.timeline({
         scrollTrigger: {
