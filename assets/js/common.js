@@ -51,6 +51,103 @@ window.onload = function () {
         lenis.stop();  // lenis의 멈춤 기능 호출
     }
 
+
+
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.matchMedia({
+        // large
+        "(min-width: 1025px)": function () {
+            $('.sc-sub .work-list li').hover(function () {
+                $(this).addClass('active');
+            }, function () {
+                $(this).removeClass('active');
+            })
+            $('.sc-sub .work-list li').each(function () {
+                const $li = $(this);
+                const $picture = $li.find('picture');
+
+                // 마우스가 li 위에 있을 때 picture를 따라오게 설정
+                $li.on('mousemove', function (e) {
+                    const offset = $li.offset();
+                    // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
+                    const y = e.pageY - offset.top - ($picture.height() / 2);  // 오프셋 추가 (예: 10px)
+
+                    gsap.to($picture, {
+                        // x: x,
+                        y: y,
+                        ease: 'power2.out',
+                        duration: 0.3
+                    });
+                });
+
+                // 마우스가 li를 떠났을 때 picture를 초기 위치로 복원
+                $li.on('mouseleave', function () {
+                    gsap.to($picture, {
+                        opacity: 0,
+                        ease: 'power2.out',
+                        duration: 0.3
+                    });
+                });
+
+                // 마우스가 li 위에 있을 때 picture를 활성화 및 초기 위치 설정
+                $li.on('mouseenter', function (e) {
+                    const offset = $li.offset();
+                    // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
+                    const y = e.pageY - offset.top - ($picture.height() / 2); // 오프셋 추가 (예: 10px)
+
+                    gsap.set($picture, {
+                        // x: x,
+                        y: y,
+                        opacity: 1
+                    });
+                });
+            });
+            gsap.to('.sc-work .title h2 span', {
+                scrollTrigger: {
+                    trigger: '.sc-work .title',
+                    start: '0% 50%',
+                    end: '100% 100%',
+                    scrub: 0,
+
+                },
+                'transform': ' scale(0.35, 0.35)',
+            },)
+        },
+        // medium
+        "(min-width: 768px) and (max-width: 1024px)": function () {
+
+        },
+        // small
+        "(max-width: 767px)": function () {
+
+        },
+        // all
+        "all": function () {
+
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     introBg.set('.sc-intro .intro-title', {
         duration: 0.2
     }).to('.sc-intro .intro-txt .title .line', {
@@ -291,16 +388,7 @@ window.onload = function () {
 
     /** sc-work */
 
-    gsap.to('.sc-work .title h2 span', {
-        scrollTrigger: {
-            trigger: '.sc-work .title',
-            start: '0% 50%',
-            end: '100% 100%',
-            scrub: 0,
 
-        },
-        'transform': ' scale(0.35, 0.35)',
-    },)
     ScrollTrigger.create({
         trigger: '.sc-work .work-wrap',
         start: '0% 0%',
@@ -340,52 +428,7 @@ window.onload = function () {
     })
 
 
-    //project hover
-    $('.sc-sub .work-list li').hover(function () {
-        $(this).addClass('active');
-    }, function () {
-        $(this).removeClass('active');
-    })
-    $('.sc-sub .work-list li').each(function () {
-        const $li = $(this);
-        const $picture = $li.find('picture');
 
-        // 마우스가 li 위에 있을 때 picture를 따라오게 설정
-        $li.on('mousemove', function (e) {
-            const offset = $li.offset();
-            // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-            const y = e.pageY - offset.top - ($picture.height() / 2);  // 오프셋 추가 (예: 10px)
-
-            gsap.to($picture, {
-                // x: x,
-                y: y,
-                ease: 'power2.out',
-                duration: 0.3
-            });
-        });
-
-        // 마우스가 li를 떠났을 때 picture를 초기 위치로 복원
-        $li.on('mouseleave', function () {
-            gsap.to($picture, {
-                opacity: 0,
-                ease: 'power2.out',
-                duration: 0.3
-            });
-        });
-
-        // 마우스가 li 위에 있을 때 picture를 활성화 및 초기 위치 설정
-        $li.on('mouseenter', function (e) {
-            const offset = $li.offset();
-            // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-            const y = e.pageY - offset.top - ($picture.height() / 2); // 오프셋 추가 (예: 10px)
-
-            gsap.set($picture, {
-                // x: x,
-                y: y,
-                opacity: 1
-            });
-        });
-    });
     /** sc-project */
     projectTl = gsap.timeline({
         scrollTrigger: {
