@@ -114,7 +114,7 @@ body.block-scroll {
 }
 
 .sc-intro .logo-txt {
-    font-size: clamp(80px, 16.9vw, 300px);
+    font-size: clamp(270px, 16.9vw, 300px);
     font-weight: bold;
     line-height: 1;
     position: relative;
@@ -186,7 +186,7 @@ body.block-scroll {
 
 .sc-intro .intro-txt h2 {
     position: relative;
-    font-size: clamp(35px, 3vw, 55px);
+    font-size: clamp(35px, 2.5vw, 55px);
     font-weight: bold;
     font-family: 'Helvetica';
     letter-spacing: -0.025em;
@@ -203,7 +203,7 @@ body.block-scroll {
     left: var(--left);
     width: 500px;
     /* height: clamp(70px, 19.16vw, 342px); */
-    height: 282px;
+    height: 267px;
     background-color: #fff;
     z-index: -1;
 }
@@ -676,12 +676,13 @@ body.block-scroll {
 .sc-desc .about-txt {
     display: flex;
     padding: 50px 10vw 250px;
-    gap: 120px;
+    gap: 80px;
     align-items: flex-start;
 }
 
 .sc-desc .about-txt h2 {
     overflow: hidden;
+    width: 140px;
 }
 
 .sc-desc .about-txt h2 span {
@@ -690,10 +691,22 @@ body.block-scroll {
     display: block;
 }
 
+.sc-desc .about-txt .txt-wrapper {}
+
+.sc-desc .about-txt p .oh {
+    transform: translateY(100%);
+    display: block;
+}
+
 .sc-desc .about-txt p {
+    overflow: hidden;
     font-size: 20px;
     font-weight: 600;
     color: #7c7c7c;
+}
+
+.sc-desc .about-txt p .line {
+    overflow: hidden;
 }
 
 .sc-desc .about-txt p em {
@@ -1449,6 +1462,10 @@ body.block-scroll {
         transform: none;
         transition: none;
         clip-path: none;
+        pointer-events: none;
+    }
+
+    .sc-sub .work-list li {
         pointer-events: none;
     }
 

@@ -56,77 +56,134 @@ window.onload = function () {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    ScrollTrigger.matchMedia({
-        // large
-        "(min-width: 1025px)": function () {
-            $('.sc-sub .work-list li').hover(function () {
-                $(this).addClass('active');
-            }, function () {
-                $(this).removeClass('active');
-            })
-            $('.sc-sub .work-list li').each(function () {
-                const $li = $(this);
-                const $picture = $li.find('picture');
+    // ScrollTrigger.matchMedia({
+    //     // large pc
+    //     "(min-width: 1025px)": function () {
+    //         $('.sc-sub .work-list li').hover(function () {
+    //             $(this).addClass('active');
+    //         }, function () {
+    //             $(this).removeClass('active');
+    //         })
+    //         $('.sc-sub .work-list li').each(function () {
+    //             const $li = $(this);
+    //             const $picture = $li.find('picture');
 
-                // 마우스가 li 위에 있을 때 picture를 따라오게 설정
-                $li.on('mousemove', function (e) {
-                    const offset = $li.offset();
-                    // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-                    const y = e.pageY - offset.top - ($picture.height() / 2);  // 오프셋 추가 (예: 10px)
+    //             // 마우스가 li 위에 있을 때 picture를 따라오게 설정
+    //             $li.on('mousemove', function (e) {
+    //                 const offset = $li.offset();
+    //                 // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
+    //                 const y = e.pageY - offset.top - ($picture.height() / 2);  // 오프셋 추가 (예: 10px)
 
-                    gsap.to($picture, {
-                        // x: x,
-                        y: y,
-                        ease: 'power2.out',
-                        duration: 0.3
-                    });
-                });
+    //                 gsap.to($picture, {
+    //                     // x: x,
+    //                     y: y,
+    //                     ease: 'power2.out',
+    //                     duration: 0.3
+    //                 });
+    //             });
 
-                // 마우스가 li를 떠났을 때 picture를 초기 위치로 복원
-                $li.on('mouseleave', function () {
-                    gsap.to($picture, {
-                        opacity: 0,
-                        ease: 'power2.out',
-                        duration: 0.3
-                    });
-                });
+    //             // 마우스가 li를 떠났을 때 picture를 초기 위치로 복원
+    //             $li.on('mouseleave', function () {
+    //                 gsap.to($picture, {
+    //                     opacity: 0,
+    //                     ease: 'power2.out',
+    //                     duration: 0.3
+    //                 });
+    //             });
 
-                // 마우스가 li 위에 있을 때 picture를 활성화 및 초기 위치 설정
-                $li.on('mouseenter', function (e) {
-                    const offset = $li.offset();
-                    // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-                    const y = e.pageY - offset.top - ($picture.height() / 2); // 오프셋 추가 (예: 10px)
+    //             // 마우스가 li 위에 있을 때 picture를 활성화 및 초기 위치 설정
+    //             $li.on('mouseenter', function (e) {
+    //                 const offset = $li.offset();
+    //                 // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
+    //                 const y = e.pageY - offset.top - ($picture.height() / 2); // 오프셋 추가 (예: 10px)
 
-                    gsap.set($picture, {
-                        // x: x,
-                        y: y,
-                        opacity: 1
-                    });
+    //                 gsap.set($picture, {
+    //                     // x: x,
+    //                     y: y,
+    //                     opacity: 1
+    //                 });
+    //             });
+    //         });
+    //         gsap.to('.sc-work .title h2 span', {
+    //             scrollTrigger: {
+    //                 trigger: '.sc-work .title',
+    //                 start: '0% 50%',
+    //                 end: '100% 100%',
+    //                 scrub: 0,
+
+    //             },
+    //             'transform': ' scale(0.35, 0.35)',
+    //         },)
+    //     },
+    //     // medium
+    //     "(min-width: 768px) and (max-width: 1024px)": function () {
+
+    //     },
+    //     // small
+    //     "(max-width: 767px)": function () {
+
+    //     },
+    //     // all
+    //     "all": function () {
+
+    //     }
+    // });
+
+
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width: 880px)", () => {
+        $('.sc-sub .work-list li').hover(function () {
+            $(this).addClass('active');
+        }, function () {
+            $(this).removeClass('active');
+        })
+        $('.sc-sub .work-list li').each(function () {
+            const $li = $(this);
+            const $picture = $li.find('picture');
+
+            // 마우스가 li 위에 있을 때 picture를 따라오게 설정
+            $li.on('mousemove', function (e) {
+                const offset = $li.offset();
+                // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
+                const y = e.pageY - offset.top - ($picture.height() / 2);  // 오프셋 추가 (예: 10px)
+
+                gsap.to($picture, {
+                    // x: x,
+                    y: y,
+                    ease: 'power2.out',
+                    duration: 0.3
                 });
             });
-            gsap.to('.sc-work .title h2 span', {
-                scrollTrigger: {
-                    trigger: '.sc-work .title',
-                    start: '0% 50%',
-                    end: '100% 100%',
-                    scrub: 0,
 
-                },
-                'transform': ' scale(0.35, 0.35)',
-            },)
-        },
-        // medium
-        "(min-width: 768px) and (max-width: 1024px)": function () {
+            // 마우스가 li를 떠났을 때 picture를 초기 위치로 복원
+            $li.on('mouseleave', function () {
+                gsap.to($picture, {
+                    opacity: 0,
+                    ease: 'power2.out',
+                    duration: 0.3
+                });
+            });
 
-        },
-        // small
-        "(max-width: 767px)": function () {
+            // 마우스가 li 위에 있을 때 picture를 활성화 및 초기 위치 설정
+            $li.on('mouseenter', function (e) {
+                const offset = $li.offset();
+                // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
+                const y = e.pageY - offset.top - ($picture.height() / 2); // 오프셋 추가 (예: 10px)
 
-        },
-        // all
-        "all": function () {
+                gsap.set($picture, {
+                    // x: x,
+                    y: y,
+                    opacity: 1
+                });
+            });
+        });
 
-        }
+    });
+
+    mm.add("(max-width: 799px)", () => {
+        gsap.set('.sc-sub .work-list li picture', { x: 0, y: 0 })
+        // gsap.set('.sc-sub .work-list li', {Pointe})
     });
 
 
@@ -311,25 +368,6 @@ window.onload = function () {
     /** sc-intro */
     const headTxt = new SplitType('.sc-intro .title .line-wrap .line', { types: ' words, chars', });
 
-
-
-    /** sc-about */
-    const aboutTxt = new SplitType('.sc-about .group-sub h3,.sc-about .group-sub h4', { types: 'lines,words', });
-    gsap.from('.sc-about .group-title span,.sc-about .group-sub h3 .word,.sc-about .group-sub h4 .word', {
-        yPercent: 100,
-        stagger: 0.5,
-        duration: 0.4,
-        scrollTrigger: {
-            trigger: '.sc-about',
-            start: '50% 100%',
-            end: '100% 100%',
-            scrub: 0,
-            // markers: true,
-            once: true
-        }
-    })
-
-
     /** sc-service */
     serviceTl = gsap.timeline({
         scrollTrigger: {
@@ -349,6 +387,7 @@ window.onload = function () {
         transform: 'translateY(0)'
     }, 'a+=1')
     const descTxt = new SplitType('.sc-desc .desc', { types: 'words, chars', });
+    // const aboutTxt = new SplitType('.sc-desc .about-txt p', { types: 'lines', });
 
 
     /** sc-desc */
@@ -374,20 +413,30 @@ window.onload = function () {
         '--x': '0%',
     })
 
-    gsap.to('.sc-desc .about-txt h2 span', {
+    gsap.to('.sc-desc .about-txt h2 span, .sc-desc .about-txt p span', {
         scrollTrigger: {
             trigger: '.sc-desc .about-txt',
-            start: '0% 100%',
-            end: '100% 100%',
+            start: '0% 50%',
+            end: '100% 30%',
+            stagger: 0.2,
             scrub: 0,
-            markers: true
+            // markers: true
         },
         y: 0
     })
 
 
     /** sc-work */
+    gsap.to('.sc-work .title h2 span', {
+        scrollTrigger: {
+            trigger: '.sc-work .title',
+            start: '0% 50%',
+            end: '100% 100%',
+            scrub: 0,
 
+        },
+        'transform': ' scale(0.2, 0.2)',
+    },)
 
     ScrollTrigger.create({
         trigger: '.sc-work .work-wrap',
@@ -420,10 +469,10 @@ window.onload = function () {
     $('.sc-work .work-wrap').mouseleave(function () {
         $('.sc-work .project-cursor').removeClass('on');
     })
-    $('.sc-work .work h3 a').mouseover(function () {
+    $('.sc-work .link-view').mouseover(function () {
         $('.sc-work .project-cursor').addClass('red')
     })
-    $('.sc-work .work h3 a').mouseleave(function () {
+    $('.sc-work .link-view').mouseleave(function () {
         $('.sc-work .project-cursor').removeClass('red')
     })
 
