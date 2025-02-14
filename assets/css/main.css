@@ -114,7 +114,7 @@ body.block-scroll {
 }
 
 .sc-intro .logo-txt {
-    font-size: clamp(270px, 16.9vw, 300px);
+    font-size: clamp(190px, 19.4vw, 300px);
     font-weight: bold;
     line-height: 1;
     position: relative;
@@ -132,8 +132,9 @@ body.block-scroll {
     position: absolute;
     left: 0;
     width: 100%;
-    /* height: clamp(80px, 16.9vw, 300px); */
-    height: 300px;
+    height: 36vh;
+    transition: height 0.3s;
+    /* height: 300px; */
     background-color: #fff;
     z-index: 2;
     bottom: 0;
@@ -185,8 +186,8 @@ body.block-scroll {
 
 
 .sc-intro .intro-txt h2 {
-    position: relative;
-    font-size: clamp(35px, 2.5vw, 55px);
+    position: absolute;
+    font-size: clamp(27px, 2.5vw, 55px);
     font-weight: bold;
     font-family: 'Helvetica';
     letter-spacing: -0.025em;
@@ -199,13 +200,14 @@ body.block-scroll {
 .sc-intro .intro-txt h2:before {
     content: "";
     position: absolute;
-    top: 0px;
+    top: -5vh;
     left: var(--left);
     width: 500px;
-    /* height: clamp(70px, 19.16vw, 342px); */
-    height: 267px;
+    height: clamp(200px, 22.5vh + 5vh, 342px);
+    /* height: 267px; */
     background-color: #fff;
     z-index: -1;
+    transition: height 0.3s
 }
 
 .sc-intro .intro-txt .btn-link {
@@ -1274,6 +1276,15 @@ body.block-scroll {
     opacity: 1;
     color: #fff
 } */
+@media screen and (max-width: 1480px) and (min-width: 1025px) {
+    .sc-intro .logo-wrap:before {
+        height: clamp(220px, 29.8vh, 270px);
+    }
+
+    .sc-intro .intro-txt h2:before {
+        height: clamp(200px, 29.7vh + 5vh, 342px);
+    }
+}
 
 @media screen and (max-width: 1024px) {
     #header .menu {
@@ -1311,8 +1322,21 @@ body.block-scroll {
         display: none;
     }
 
+    .relative .sc-desc {
+        position: relative !important;
+        top: unset;
+    }
+
     .sc-desc .about-txt {
         flex-direction: column;
+    }
+
+    .sc-intro .intro-txt {
+        align-items: flex-start;
+    }
+
+    .sc-intro .intro-txt h2 {
+        position: relative;
     }
 
     .sc-work .thumb .m-title {
@@ -1411,7 +1435,7 @@ body.block-scroll {
 
     .sc-work .m-title h3 {
         text-align: center;
-        font-size: 50px;
+        font-size: 34px;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 0.25px;
@@ -1421,13 +1445,13 @@ body.block-scroll {
     }
 
     .sc-work .m-title h4 {
-        font-size: 18px;
+        font-size: 16px;
         text-align: center;
         transition-delay: 0.4s;
     }
 
     .sc-work .m-title h5 {
-        font-size: 18px;
+        font-size: 16px;
         text-align: center;
         transition-delay: 0.6s;
     }

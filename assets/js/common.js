@@ -54,7 +54,6 @@ window.onload = function () {
 
 
 
-    gsap.registerPlugin(ScrollTrigger);
 
     // ScrollTrigger.matchMedia({
     //     // large pc
@@ -130,8 +129,23 @@ window.onload = function () {
     // });
 
 
+    gsap.registerPlugin(ScrollTrigger);
     let mm = gsap.matchMedia();
-
+    mm.add("(min-width:1025px)", () => {
+        // ScrollTrigger.refresh()
+        /** header scroll */
+        let lastScrollY = 0;
+        window.addEventListener("scroll", () => {
+            const currentScrollY = window.scrollY;
+            const introH = $('.sc-intro').height();
+            if (currentScrollY < introH) {
+                gsap.to("#header .logo a", { y: "100%", autoAlpha: 0, 'transform': 'scale(1)' });
+            } else {
+                gsap.to("#header .logo a", { y: "0%", autoAlpha: 1 });
+            }
+            lastScrollY = introH;
+        });
+    })
     mm.add("(min-width: 880px)", () => {
         $('.sc-sub .work-list li').hover(function () {
             $(this).addClass('active');
@@ -185,7 +199,7 @@ window.onload = function () {
         gsap.set('.sc-sub .work-list li picture', { x: 0, y: 0 })
         // gsap.set('.sc-sub .work-list li', {Pointe})
     });
-
+    window.addEventListener("resize", ScrollTrigger.update);
 
 
 
@@ -251,18 +265,7 @@ window.onload = function () {
     // //         }, 4000);
     // //     }
     // // });
-    /** header scroll */
-    let lastScrollY = 0;
-    window.addEventListener("scroll", () => {
-        const currentScrollY = window.scrollY;
-        const introH = $('.sc-intro').height();
-        if (currentScrollY < introH) {
-            gsap.to("#header .logo a", { y: "100%", autoAlpha: 0, 'transform': 'scale(1)' });
-        } else {
-            gsap.to("#header .logo a", { y: "0%", autoAlpha: 1 });
-        }
-        lastScrollY = introH;
-    });
+
     /** logo 사이즈 sc-work섹션에서 작아지게 */
     ScrollTrigger.create({
         trigger: `.sc-work`,
@@ -413,7 +416,7 @@ window.onload = function () {
         '--x': '0%',
     })
 
-    gsap.to('.sc-desc .about-txt h2 span, .sc-desc .about-txt p span', {
+    gsap.to('.sc-desc .about-txt h2 span, .sc-desc .about-txt .txt-wrapper span', {
         scrollTrigger: {
             trigger: '.sc-desc .about-txt',
             start: '0% 50%',

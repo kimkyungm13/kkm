@@ -270,7 +270,7 @@ body.noscroll {
 
 
 #footer .logo-txt {
-    font-size: 80px;
+    font-size: clamp(50px, 5vw, 80px);
     font-weight: bold;
     line-height: 1;
     position: relative;
@@ -281,3 +281,12 @@ body.noscroll {
     overflow: hidden;
     transform: translateY(100%);
 }
+
+/* @media screen and (max-width: 1024px) {
+    #header .logo a {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+    }
+
+} */
