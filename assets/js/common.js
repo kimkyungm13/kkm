@@ -451,30 +451,16 @@ window.onload = function () {
 
 
     /** sc-work */
-    gsap.registerPlugin(ScrollTrigger);
-
-    const titleTl = gsap.timeline({
+    gsap.to('.sc-work .title h2 span', {
         scrollTrigger: {
-            trigger: ".sc-work .title",
-            start: "top 15%",
-            end: "100% 100%",
-            scrub: true,
-            markers: true,
-        }
-    });
+            trigger: '.sc-work .title',
+            start: '0% 50%',
+            end: '100% 100%',
+            scrub: 0,
 
-    titleTl.to('.sc-work .tit-wrap:nth-child(2) .tit-text', {
-        y: '-3vw'
-    }, 'a').to('.sc-work .tit-wrap:nth-child(3) .tit-text', {
-        y: '-7.17vw'
-    }, 'a').to('.sc-work .tit-wrap:nth-child(4) .tit-text', {
-        y: '-12.5vw'
-    }, 'a').to('.sc-work .tit-wrap:nth-child(5) .tit-text', {
-        y: '-19vw'
-    }, 'a').to('.sc-work .tit-wrap:nth-child(6) .tit-text', {
-        y: '-26.6vw'
-    }, 'a')
-
+        },
+        'transform': ' scale(0.2, 0.2)',
+    },)
 
     ScrollTrigger.create({
         trigger: '.sc-work .work-wrap',
