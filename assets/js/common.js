@@ -146,54 +146,75 @@ window.onload = function () {
             lastScrollY = introH;
         });
     })
-    mm.add("(min-width: 880px)", () => {
-        $('.sc-sub .work-list li').hover(function () {
-            $(this).addClass('active');
-        }, function () {
-            $(this).removeClass('active');
-        })
-        $('.sc-sub .work-list li').each(function () {
-            const $li = $(this);
-            const $picture = $li.find('picture');
+    $(document).ready(function () {
+        mm.add("(min-width: 880px)", () => {
+            $('.sc-sub .work-list li').hover(function () {
+                $(this).addClass('active');
+            }, function () {
+                $(this).removeClass('active');
+            })
+            $('.sc-sub .work-list .pic-wrap').each(function () {
+                const $li = $(this).parents('li');
+                const img = $li.find('.hover-img')[0]; // jQuery 객체 → DOM 요소
+                const canvas = $(this).find(".pixel-canvas")[0];
+                const ctx = canvas.getContext("2d");
+                let pixelation = 50; // 초기 픽셀 크기
 
-            // 마우스가 li 위에 있을 때 picture를 따라오게 설정
-            $li.on('mousemove', function (e) {
-                const offset = $li.offset();
-                // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-                const y = e.pageY - offset.top - ($picture.height() / 2);  // 오프셋 추가 (예: 10px)
+                function drawPixelated(size) {
+                    if (!img || !img.complete) return;
 
-                gsap.to($picture, {
-                    // x: x,
-                    y: y,
-                    ease: 'power2.out',
-                    duration: 0.3
+                    let w = img.naturalWidth || img.width;
+                    let h = img.naturalHeight || img.height;
+
+                    // if (w === 0 || h === 0) return; // 크기가 0이면 실행 안 함
+
+                    canvas.width = w;
+                    canvas.height = h;
+
+                    let tempCanvas = document.createElement("canvas");
+                    let tempCtx = tempCanvas.getContext("2d");
+                    tempCanvas.width = Math.max(1, w / size);
+                    tempCanvas.height = Math.max(1, h / size);
+
+                    tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+                    ctx.imageSmoothingEnabled = false;
+                    ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+                }
+
+                if (img.complete) {
+                    drawPixelated(pixelation);
+                } else {
+                    img.onload = function () {
+                        drawPixelated(pixelation);
+                    };
+                }
+
+                $li.on("mouseenter", function () {
+                    gsap.to({ size: pixelation }, {
+                        size: 1,
+                        delay: 0.5,
+                        duration: 1,
+                        ease: "power2.out",
+                        onUpdate: function () {
+                            drawPixelated(Math.max(1, this.targets()[0].size));
+                        }
+                    });
                 });
-            });
 
-            // 마우스가 li를 떠났을 때 picture를 초기 위치로 복원
-            $li.on('mouseleave', function () {
-                gsap.to($picture, {
-                    opacity: 0,
-                    ease: 'power2.out',
-                    duration: 0.3
-                });
-            });
-
-            // 마우스가 li 위에 있을 때 picture를 활성화 및 초기 위치 설정
-            $li.on('mouseenter', function (e) {
-                const offset = $li.offset();
-                // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-                const y = e.pageY - offset.top - ($picture.height() / 2); // 오프셋 추가 (예: 10px)
-
-                gsap.set($picture, {
-                    // x: x,
-                    y: y,
-                    opacity: 1
+                $li.on("mouseleave", function () {
+                    gsap.to({ size: 1 }, {
+                        size: pixelation,
+                        duration: 1,
+                        ease: "power2.out",
+                        onUpdate: function () {
+                            drawPixelated(Math.max(1, this.targets()[0].size));
+                        }
+                    });
                 });
             });
         });
-
     });
+
 
     mm.add("(max-width: 799px)", () => {
         gsap.set('.sc-sub .work-list li picture', { x: 0, y: 0 })
@@ -430,16 +451,30 @@ window.onload = function () {
 
 
     /** sc-work */
-    gsap.to('.sc-work .title h2 span', {
-        scrollTrigger: {
-            trigger: '.sc-work .title',
-            start: '0% 50%',
-            end: '100% 100%',
-            scrub: 0,
+    gsap.registerPlugin(ScrollTrigger);
 
-        },
-        'transform': ' scale(0.2, 0.2)',
-    },)
+    const titleTl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".sc-work .title",
+            start: "top 15%",
+            end: "100% 100%",
+            scrub: true,
+            markers: true,
+        }
+    });
+
+    titleTl.to('.sc-work .tit-wrap:nth-child(2) .tit-text', {
+        y: '-3vw'
+    }, 'a').to('.sc-work .tit-wrap:nth-child(3) .tit-text', {
+        y: '-7.17vw'
+    }, 'a').to('.sc-work .tit-wrap:nth-child(4) .tit-text', {
+        y: '-12.5vw'
+    }, 'a').to('.sc-work .tit-wrap:nth-child(5) .tit-text', {
+        y: '-19vw'
+    }, 'a').to('.sc-work .tit-wrap:nth-child(6) .tit-text', {
+        y: '-26.6vw'
+    }, 'a')
+
 
     ScrollTrigger.create({
         trigger: '.sc-work .work-wrap',
