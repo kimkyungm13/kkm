@@ -1103,7 +1103,7 @@ body.block-scroll {
 
 
 .sc-sub {
-    padding: 150px 100px;
+    padding: clamp(10px, 5.6vw, 100px);
     overflow: hidden;
 }
 
@@ -1143,7 +1143,7 @@ body.block-scroll {
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-size: 80px;
+    font-size: clamp(30px, 5vw, 80px);
     font-weight: 200;
     gap: 7px;
     height: 100px;
@@ -1529,9 +1529,9 @@ body.block-scroll {
         display: none;
     }
 
-    .sc-sub {
+    /* .sc-sub {
         padding: 0;
-    }
+    } */
 
     .sc-sub .title {
         padding: 30px;
@@ -1559,7 +1559,8 @@ body.block-scroll {
     }
 
     .sc-sub .work-list li {
-        pointer-events: none;
+        /* pointer-events: none; */
+        padding: 15px 0px;
     }
 
     .sc-sub .work-list li .item {
@@ -1570,6 +1571,19 @@ body.block-scroll {
         margin-left: 0vw;
         flex: 1;
         align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .sc-sub .work-list li .item .txt-area {
+        display: flex;
+        justify-content: space-between;
+        flex: 1;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .sc-sub .work-list li .item .txt-area p {
+        width: 100%;
     }
 
     #footer .site-info {
