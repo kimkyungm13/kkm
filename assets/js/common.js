@@ -450,17 +450,29 @@ window.onload = function () {
     })
 
 
-    /** sc-work */
-    gsap.to('.sc-work .title h2 span', {
+    /** sc-work title */
+    titleTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.sc-work .title',
-            start: '0% 50%',
+            start: '0% 70%',
             end: '100% 100%',
             scrub: 0,
-
+            // markers: true,
         },
-        'transform': ' scale(0.2, 0.2)',
+    })
+    titleTl.to('.sc-work .title h2 span:nth-child(1)', {
+        transform: 'translateX(0%)',
+        'background-position-x': '0%'
+    }, 'a').to('.sc-work .title h2 span:nth-child(2)', {
+        transform: 'translateX(5%)',
+        'background-position-x': '5%',
+    }, 'a').to('.sc-work .title h2 span:nth-child(2)', {
+        'background-position-x': '0%',
+        transform: 'translateX(0%)'
+    },).to('.sc-work .title p span', {
+        transform: 'translateY(0%)'
     },)
+
 
     ScrollTrigger.create({
         trigger: '.sc-work .work-wrap',

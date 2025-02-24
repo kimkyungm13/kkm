@@ -84,3 +84,10 @@
     font-weight: bold;
     src: url('../fonts/StretchPro.otf') format("opentype")
 }
+
+@font-face {
+    font-family: 'dirty';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/Dirtyline36daysoftype2022.otf') format("opentype")
+}
