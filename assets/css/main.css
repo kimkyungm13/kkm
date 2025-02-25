@@ -115,7 +115,7 @@ body {
     top: -5vh;
     left: var(--left);
     width: 500px;
-    height: clamp(200px, 24vh + 5vh, 347px);
+    height: clamp(200px, 17vw, 303px);
     /* height: 267px; */
     background-color: #fff;
     z-index: -1;
