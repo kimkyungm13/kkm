@@ -60,6 +60,7 @@ body.noscroll {
     visibility: hidden;
 }
 
+
 #header .logo a.none {
     opacity: 0;
     visibility: hidden;
@@ -98,6 +99,10 @@ body.noscroll {
     overflow: hidden;
     font-size: 19px;
     font-weight: bold;
+}
+
+#header .menu a:focus {
+    outline: .1rem dashed rgb(255 255 255 / 65%) !important
 }
 
 #header .menu a:hover {
@@ -282,11 +287,12 @@ body.noscroll {
     transform: translateY(100%);
 }
 
-/* @media screen and (max-width: 1024px) {
-    #header .logo a {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0) scale(1);
+@media screen and (max-width: 1024px) {
+    #header .menu {
+        margin-right: 0;
     }
 
-} */
+    #footer .site-info {
+        flex-direction: column;
+    }
+}
