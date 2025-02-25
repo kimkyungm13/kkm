@@ -1,245 +1,55 @@
 
-window.onload = function () {
+window.onload = () => {
+    //스크롤 위치 복원 비활
     history.scrollRestoration = "manual";
+
+    //GSAP Plugins
+    gsap.registerPlugin(ScrollTrigger);
 
     /** LENIS */
     const lenis = new Lenis()
-    lenis.on('scroll', (e) => {
-    })
+    // lenis.on('scroll', (e) => {
+    //     console.log(e)
+    // })
+
+    //lenis + gsap scrollTrigger 연동
     lenis.on('scroll', ScrollTrigger.update)
     gsap.ticker.add((time) => {
         lenis.raf(time * 1000)
     })
     gsap.ticker.lagSmoothing(0)
     gsap.defaults({
-        ease: "ease"
-    })
-    $('.nav .menu .about a').click(function (e) {
-        e.preventDefault();
-        lenis.scrollTo('#about')
-    })
-    $('.nav .menu .work a').click(function (e) {
-        e.preventDefault();
-        lenis.scrollTo('#work')
-    })
-    $('.nav .menu .contact a').click(function (e) {
-        e.preventDefault();
-        lenis.scrollTo('#footer')
+        ease: "power1.out"
     })
 
+    /** NAV LINK*/
+    const navLink = [
+        { link: '.nav .about a', scrollTo: '#about' },
+        { link: '.nav .work a', scrollTo: '#work' },
+        { link: '.nav .contact a', scrollTo: '#footer' },
+    ]
+    navLink.forEach(({ link, scrollTo }) => {
+        document.querySelector(link).addEventListener('click', (e) => {
+            e.preventDefault();
+            lenis.scrollTo(scrollTo)
+        })
+    }
+    )
 
-
+    /** sc-intro */
     const introBg = gsap.timeline({
         onStart: () => {
-            // 애니메이션이 시작될 때 스크롤 방지
+            // 시작 : 스크롤 방지
             document.querySelector('#wrapper').addEventListener('wheel', preventScroll, { passive: false });
         },
         onComplete: () => {
-            // 애니메이션이 끝날 때 스크롤 허용
+            // 끝 : 스크롤 허용
             document.querySelector('#wrapper').removeEventListener('wheel', preventScroll);
             lenis.start();  // lenis의 멈춤 기능 호출
-
         },
-        // onReverseComplete: () => {
-        //     // 애니메이션이 끝날 때 스크롤 허용
-        //     document.querySelector('#wrapper').removeEventListener('wheel', preventScroll);
-        // }
     });
-
-    function preventScroll(e) {
-        e.preventDefault();
-        lenis.stop();  // lenis의 멈춤 기능 호출
-    }
-
-
-
-
-
-    // ScrollTrigger.matchMedia({
-    //     // large pc
-    //     "(min-width: 1025px)": function () {
-    //         $('.sc-sub .work-list li').hover(function () {
-    //             $(this).addClass('active');
-    //         }, function () {
-    //             $(this).removeClass('active');
-    //         })
-    //         $('.sc-sub .work-list li').each(function () {
-    //             const $li = $(this);
-    //             const $picture = $li.find('picture');
-
-    //             // 마우스가 li 위에 있을 때 picture를 따라오게 설정
-    //             $li.on('mousemove', function (e) {
-    //                 const offset = $li.offset();
-    //                 // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-    //                 const y = e.pageY - offset.top - ($picture.height() / 2);  // 오프셋 추가 (예: 10px)
-
-    //                 gsap.to($picture, {
-    //                     // x: x,
-    //                     y: y,
-    //                     ease: 'power2.out',
-    //                     duration: 0.3
-    //                 });
-    //             });
-
-    //             // 마우스가 li를 떠났을 때 picture를 초기 위치로 복원
-    //             $li.on('mouseleave', function () {
-    //                 gsap.to($picture, {
-    //                     opacity: 0,
-    //                     ease: 'power2.out',
-    //                     duration: 0.3
-    //                 });
-    //             });
-
-    //             // 마우스가 li 위에 있을 때 picture를 활성화 및 초기 위치 설정
-    //             $li.on('mouseenter', function (e) {
-    //                 const offset = $li.offset();
-    //                 // const x = e.pageX - offset.left // 오프셋 추가 (예: 10px)
-    //                 const y = e.pageY - offset.top - ($picture.height() / 2); // 오프셋 추가 (예: 10px)
-
-    //                 gsap.set($picture, {
-    //                     // x: x,
-    //                     y: y,
-    //                     opacity: 1
-    //                 });
-    //             });
-    //         });
-    //         gsap.to('.sc-work .title h2 span', {
-    //             scrollTrigger: {
-    //                 trigger: '.sc-work .title',
-    //                 start: '0% 50%',
-    //                 end: '100% 100%',
-    //                 scrub: 0,
-
-    //             },
-    //             'transform': ' scale(0.35, 0.35)',
-    //         },)
-    //     },
-    //     // medium
-    //     "(min-width: 768px) and (max-width: 1024px)": function () {
-
-    //     },
-    //     // small
-    //     "(max-width: 767px)": function () {
-
-    //     },
-    //     // all
-    //     "all": function () {
-
-    //     }
-    // });
-
-
-    gsap.registerPlugin(ScrollTrigger);
-    let mm = gsap.matchMedia();
-    mm.add("(min-width:1025px)", () => {
-        // ScrollTrigger.refresh()
-        /** header scroll */
-        let lastScrollY = 0;
-        window.addEventListener("scroll", () => {
-            const currentScrollY = window.scrollY;
-            const introH = $('.sc-intro').height();
-            if (currentScrollY < introH) {
-                gsap.to("#header .logo a", { y: "100%", autoAlpha: 0, 'transform': 'scale(1)' });
-            } else {
-                gsap.to("#header .logo a", { y: "0%", autoAlpha: 1 });
-            }
-            lastScrollY = introH;
-        });
-    })
-    $(document).ready(function () {
-        mm.add("(min-width: 880px)", () => {
-            $('.sc-sub .work-list li').hover(function () {
-                $(this).addClass('active');
-            }, function () {
-                $(this).removeClass('active');
-            })
-            $('.sc-sub .work-list .pic-wrap').each(function () {
-                const $li = $(this).parents('li');
-                const img = $li.find('.hover-img')[0]; // jQuery 객체 → DOM 요소
-                const canvas = $(this).find(".pixel-canvas")[0];
-                const ctx = canvas.getContext("2d");
-                let pixelation = 50; // 초기 픽셀 크기
-
-                function drawPixelated(size) {
-                    if (!img || !img.complete) return;
-
-                    let w = img.naturalWidth || img.width;
-                    let h = img.naturalHeight || img.height;
-
-                    // if (w === 0 || h === 0) return; // 크기가 0이면 실행 안 함
-
-                    canvas.width = w;
-                    canvas.height = h;
-
-                    let tempCanvas = document.createElement("canvas");
-                    let tempCtx = tempCanvas.getContext("2d");
-                    tempCanvas.width = Math.max(1, w / size);
-                    tempCanvas.height = Math.max(1, h / size);
-
-                    tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
-                    ctx.imageSmoothingEnabled = false;
-                    ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
-                }
-
-                if (img.complete) {
-                    drawPixelated(pixelation);
-                } else {
-                    img.onload = function () {
-                        drawPixelated(pixelation);
-                    };
-                }
-
-                $li.on("mouseenter", function () {
-                    gsap.to({ size: pixelation }, {
-                        size: 1,
-                        delay: 0.5,
-                        duration: 1,
-                        ease: "power2.out",
-                        onUpdate: function () {
-                            drawPixelated(Math.max(1, this.targets()[0].size));
-                        }
-                    });
-                });
-
-                $li.on("mouseleave", function () {
-                    gsap.to({ size: 1 }, {
-                        size: pixelation,
-                        duration: 1,
-                        ease: "power2.out",
-                        onUpdate: function () {
-                            drawPixelated(Math.max(1, this.targets()[0].size));
-                        }
-                    });
-                });
-            });
-        });
-    });
-
-
-    mm.add("(max-width: 799px)", () => {
-        gsap.set('.sc-sub .work-list li picture', { x: 0, y: 0 })
-        // gsap.set('.sc-sub .work-list li', {Pointe})
-    });
-    window.addEventListener("resize", ScrollTrigger.update);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /** sc-intro */
+    //시작애니메이션
     introBg.set('.sc-intro .intro-title', {
         duration: 0.2
     }).to('.sc-intro .intro-txt .title .line', {
@@ -265,157 +75,34 @@ window.onload = function () {
         },
         '--left': '0'
     });
+    function preventScroll(e) {
+        e.preventDefault();
+        lenis.stop();  // lenis의 멈춤 기능 호출
+    }
 
-    // const conWrap = document.getElementById('main');
-    // const $body = document.querySelector('body');
-    // function preventScroll(e) {
-    //     e.preventDefault();
-    //     lenis.stop();
-    // }
-    // conWrap.addEventListener('wheel', preventScroll, { passive: false })
-    // conWrap.addEventListener('wheel', function () {
-    //     conWrap.removeEventListener('wheel', preventScroll, { passive: false })
-    // })
-    // // let firstScroll = true; //초반세팅
-    // // $body.addEventListener('wheel', function (e) {
-    // //     if (e.deltaY > 0 && firstScroll == true) {
-    // //         $('.section1').addClass('down');
-    // //         setTimeout(() => {
-    // //             main.removeEventListener('wheel', preventScroll, { passive: false });
-    // //             firstScroll = false;
-    // //         }, 4000);
-    // //     }
-    // // });
 
-    /** logo 사이즈 sc-work섹션에서 작아지게 */
-    ScrollTrigger.create({
-        trigger: `.sc-work`,
-        start: "0% 0",
-        end: "100% 0%",
-        scrub: 0,
-        duration: 0.2,
-        onEnter: () => gsap.to("#header .logo a", {
-            'scale': '0.5',
-            'transform-origin': 'left center'
-        }),
-        onEnterBack: () => gsap.to("#header .logo a", {
-            'scale': '0.5',
-            'transform-origin': 'left center'
-        }),
-        onLeave: () => gsap.to("#header .logo a", {
-            'scale': '1',
-            // 'transform-origin': 'left top'
-        }),
-        onLeaveBack: () => gsap.to("#header .logo a", {
-            'scale': '1',
-            // 'transform-origin': 'left top'
-        })
+    //반응형
+    let mm = gsap.matchMedia();
+    mm.add("(min-width:1025px)", () => {
+        // ScrollTrigger.refresh()
+        /** header scroll */
+        let lastScrollY = 0;
+        window.addEventListener("scroll", () => {
+            const currentScrollY = window.scrollY;
+            const introH = $('.sc-intro').height();
+            if (currentScrollY < introH) {
+                gsap.to("#header .logo a", { y: "100%", autoAlpha: 0, 'transform': 'scale(1)' });
+            } else {
+                gsap.to("#header .logo a", { y: "0%", autoAlpha: 1 });
+            }
+            lastScrollY = introH;
+        });
     })
-    /**
-     * mouse cursor
-     */
-    gsap.set(".custom-cursor", { xPercent: -50, yPercent: -50 });
-    document.addEventListener("mousemove", function (e) {
-        gsap.to(".custom-cursor", {
-            duration: 0.2,
-            left: e.pageX,
-            top: e.pageY,
-            ease: "power2.out"
-        });
-    });
-
-    const links = document.querySelectorAll('.btn-link');
-    links.forEach(link => {
-        link.addEventListener('mouseenter', () => {
-            gsap.to('.custom-cursor', {
-                width: 20,
-                height: 20,
-                borderColor: 'blue',
-                backgroundColor: 'yellow',
-                duration: 0.2,
-                ease: "power2.out"
-            });
-        });
-
-        link.addEventListener('mouseleave', () => {
-            gsap.to('.custom-cursor', {
-                width: 10,
-                height: 10,
-                borderColor: 'black',
-                backgroundColor: 'transparent',
-                duration: 0.2,
-                ease: "power2.out"
-            });
-        });
-    });
-    const follower = document.querySelector(".follower");
-    gsap.set(follower, {
-        opacity: 1,
-        scale: 0,
-        transformOrigin: "center center",
-        xPercent: -50,
-        yPercent: -50
-    });
-    const xTo = gsap.quickTo(follower, "x", { ease: "power3" });
-    const yTo = gsap.quickTo(follower, "y", { ease: "power3" });
-
-    const box = document.querySelector(".sc-intro");
-    const boxPosition = box.getBoundingClientRect().x;
-    const boxLeft = box.getBoundingClientRect().x;
-    const boxTop = box.offsetTop;
-
-    box.addEventListener("mousemove", (e) => {
-        // console.log(e.pageY, e.clientY, boxTop);
-        xTo(e.clientX - boxLeft);
-        yTo(e.pageY - boxTop);
-    });
-
-    box.addEventListener("mouseenter", () => {
-        gsap.to(follower, {
-            duration: 0.3,
-            opacity: 1,
-            scale: 1,
-            transformOrigin: "center center"
-        });
-    });
-
-    box.addEventListener("mouseleave", () => {
-        gsap.to(follower, {
-            duration: 0.3,
-            opacity: 0,
-            scale: 0,
-            transformOrigin: "center center"
-        });
-    });
-
-
-    /** sc-intro */
-    const headTxt = new SplitType('.sc-intro .title .line-wrap .line', { types: ' words, chars', });
-
-    /** sc-service */
-    serviceTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.sc-service',
-            start: '0% 100%',
-            end: '80% 100%',
-            scrub: 0,
-            // markers: true
-        }
-    })
-    serviceTl.to('.sc-service .consulting', {
-        duration: 1,
-        transform: 'translateY(0)'
-    }, 'a').to('.sc-service .designing', {
-        transform: 'translateY(0)'
-    }, 'a+=0.5').to('.sc-service .developing', {
-        transform: 'translateY(0)'
-    }, 'a+=1')
-    const descTxt = new SplitType('.sc-desc .desc', { types: 'words, chars', });
-    // const aboutTxt = new SplitType('.sc-desc .about-txt p', { types: 'lines', });
-
 
     /** sc-desc */
-    gsap.to('.sc-desc .desc-wrap .desc .word .char', {
+    //desc 글자단위로 split
+    const descTxt = new SplitType('.sc-desc .desc', { types: 'chars', });
+    gsap.to('.sc-desc .desc-wrap .desc .char', {
         scrollTrigger: {
             trigger: '.sc-desc ',
             start: '0% 50%',
@@ -425,17 +112,6 @@ window.onload = function () {
         stagger: 1,
         color: "#000",
     });
-    gsap.to('.sc-desc .title-wrap .first,.sc-desc .title-wrap .second', {
-        scrollTrigger: {
-            trigger: ".sc-desc .title-wrap",
-            start: "10% 100%",
-            end: "100% 0%",
-            scrub: 0,
-            // markers: true,
-            invalidateOnRefresh: true,
-        },
-        '--x': '0%',
-    })
 
     gsap.to('.sc-desc .about-txt h2 span, .sc-desc .about-txt .txt-wrapper span', {
         scrollTrigger: {
@@ -451,7 +127,7 @@ window.onload = function () {
 
 
     /** sc-work title */
-    titleTl = gsap.timeline({
+    const titleTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.sc-work .title',
             start: '0% 70%',
@@ -490,48 +166,138 @@ window.onload = function () {
         }
     });
 
-
-
-    $('.sc-work .work-wrap').mousemove(function (e) {
-        const projectCursor = $('.project-cursor [data-target="cursor"]');
+    document.querySelector('.sc-work .work-wrap').addEventListener('mousemove', (e) => {
+        const projectCursor = document.querySelector('.project-cursor [data-target="cursor"]')
         gsap.to(projectCursor, {
-            x: e.clientX + 'px',
-            y: e.clientY + 'px'
+            x: `${e.clientX}px`,
+            y: `${e.clientY}px`,
         })
     })
-    $('.sc-work .work-wrap').mouseover(function () {
-        $('.sc-work .project-cursor').addClass('on');
+
+
+    const projectCursor = document.querySelector('.sc-work .project-cursor');
+    const workWrap = document.querySelectorAll('.sc-work .work-wrap');
+    const linkView = document.querySelectorAll('.sc-work .link-view');
+    workWrap.forEach(workWrap => {
+        workWrap.addEventListener(
+            'mouseover', () => { projectCursor.classList.add('on') })
     })
-    $('.sc-work .work-wrap').mouseleave(function () {
-        $('.sc-work .project-cursor').removeClass('on');
+    workWrap.forEach(workWrap => {
+        workWrap.addEventListener(
+            'mouseleave', () => { projectCursor.classList.remove('on') })
     })
-    $('.sc-work .link-view').mouseover(function () {
-        $('.sc-work .project-cursor').addClass('red')
+    linkView.forEach(linkView => {
+        linkView.addEventListener(
+            'mouseover', () => { projectCursor.classList.add('red') }
+        )
     })
-    $('.sc-work .link-view').mouseleave(function () {
-        $('.sc-work .project-cursor').removeClass('red')
+    linkView.forEach(linkView => {
+        linkView.addEventListener(
+            'mouseleave', () => { projectCursor.classList.remove('red') }
+        )
+    })
+
+    /** logo 사이즈 sc-work섹션에서 작아지게 */
+    ScrollTrigger.create({
+        trigger: `.sc-work`,
+        start: "0% 0",
+        end: "100% 0%",
+        scrub: 0,
+        duration: 0.2,
+        onEnter: () => gsap.to("#header .logo a", {
+            'scale': '0.5',
+            'transform-origin': 'left center'
+        }),
+        onEnterBack: () => gsap.to("#header .logo a", {
+            'scale': '0.5',
+            'transform-origin': 'left center'
+        }),
+        onLeave: () => gsap.to("#header .logo a", {
+            'scale': '1',
+            // 'transform-origin': 'left top'
+        }),
+        onLeaveBack: () => gsap.to("#header .logo a", {
+            'scale': '1',
+            // 'transform-origin': 'left top'
+        })
     })
 
 
+    /** sc-sub */
+    mm.add("(min-width: 880px)", () => {
+        $('.sc-sub .work-list li').hover(function () {
+            $(this).addClass('active');
+        }, function () {
+            $(this).removeClass('active');
+        })
+        $('.sc-sub .work-list .pic-wrap').each(function () {
+            const $li = $(this).parents('li');
+            const img = $li.find('.hover-img')[0]; // jQuery 객체 → DOM 요소
+            const canvas = $(this).find(".pixel-canvas")[0];
+            const ctx = canvas.getContext("2d");
+            let pixelation = 50; // 초기 픽셀 크기
 
-    /** sc-project */
-    projectTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.sc-project',
-            start: '50% 100%',
-            end: '150% 100%',
-            scrub: 0,
-            // markers: true,
-        },
+            function drawPixelated(size) {
+                if (!img || !img.complete) return;
+
+                let w = img.naturalWidth || img.width;
+                let h = img.naturalHeight || img.height;
+
+                // if (w === 0 || h === 0) return; // 크기가 0이면 실행 안 함
+
+                canvas.width = w;
+                canvas.height = h;
+
+                let tempCanvas = document.createElement("canvas");
+                let tempCtx = tempCanvas.getContext("2d");
+                tempCanvas.width = Math.max(1, w / size);
+                tempCanvas.height = Math.max(1, h / size);
+
+                tempCtx.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+            }
+
+            if (img.complete) {
+                drawPixelated(pixelation);
+            } else {
+                img.onload = function () {
+                    drawPixelated(pixelation);
+                };
+            }
+
+            $li.on("mouseenter", function () {
+                gsap.to({ size: pixelation }, {
+                    size: 1,
+                    delay: 0.5,
+                    duration: 1,
+                    ease: "power2.out",
+                    onUpdate: function () {
+                        drawPixelated(Math.max(1, this.targets()[0].size));
+                    }
+                });
+            });
+
+            $li.on("mouseleave", function () {
+                gsap.to({ size: 1 }, {
+                    size: pixelation,
+                    duration: 1,
+                    ease: "power2.out",
+                    onUpdate: function () {
+                        drawPixelated(Math.max(1, this.targets()[0].size));
+                    }
+                });
+            });
+        });
     });
-    projectTl.to('.list-area:first-child', {
-        xPercent: 1
-    }, 'a').to('.list-area:last-child', {
-        xPercent: -1
-    }, 'a')
+    mm.add("(max-width: 799px)", () => {
+        gsap.set('.sc-sub .work-list li picture', { x: 0, y: 0 })
+        // gsap.set('.sc-sub .work-list li', {Pointe})
+    });
+    window.addEventListener("resize", ScrollTrigger.update);
 
-
-    lastTl = gsap.timeline({
+    /** FOOTER */
+    const lastTl = gsap.timeline({
         scrollTrigger: {
             trigger: '#footer',
             start: '0% 70%',
