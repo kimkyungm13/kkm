@@ -68,7 +68,7 @@ introBg.set('.sc-intro .intro-title', {
     autoAlpha: 1,
 });
 
-gsap.to('.sc-intro .logo-wrap, .sc-intro .intro-txt h2', {
+gsap.to('.sc-intro .logo-wrap, .sc-intro .intro-txt .title', {
     scrollTrigger: {
         trigger: '.sc-intro',
         start: '00% 0%',

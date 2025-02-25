@@ -24,10 +24,6 @@ body {
     left: 0;
 }
 
-.sc-intro .marquee {
-    display: flex;
-}
-
 .sc-intro .logo-wrap {
     position: absolute;
     display: flex;
@@ -83,11 +79,11 @@ body {
 }
 
 
-.sc-intro .intro-txt .title .line-wrap {
+.sc-intro .title .line-wrap {
     overflow: hidden;
 }
 
-.sc-intro .intro-txt .title .line {
+.sc-intro .title .line {
     transform: translateY(100%);
     overflow: hidden;
     display: inline-block;
@@ -97,7 +93,7 @@ body {
 
 
 
-.sc-intro .intro-txt h2 {
+.sc-intro .title {
     position: absolute;
     font-size: clamp(27px, 2.5vw, 55px);
     font-weight: bold;
@@ -109,7 +105,7 @@ body {
     --left: -25vw
 }
 
-.sc-intro .intro-txt h2:before {
+.sc-intro .title:before {
     content: "";
     position: absolute;
     top: -5vh;
@@ -818,7 +814,7 @@ body {
         height: clamp(220px, 29.8vh, 270px);
     }
 
-    .sc-intro .intro-txt h2:before {
+    .sc-intro .intro-txt .title:before {
         height: clamp(200px, 32vw, 322px);
     }
 }
@@ -870,7 +866,7 @@ body {
         align-items: flex-start;
     }
 
-    .sc-intro .intro-txt h2 {
+    .sc-intro .intro-txt .title {
         position: relative;
     }
 
