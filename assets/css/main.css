@@ -42,7 +42,7 @@ body {
     font-weight: bold;
     line-height: 1;
     position: relative;
-    z-index: 2;
+    z-index: 4;
     padding: 0 20px;
     font-family: mont;
     display: flex;
@@ -115,7 +115,7 @@ body {
     top: -5vh;
     left: var(--left);
     width: 500px;
-    height: clamp(200px, 17vw, 303px);
+    height: clamp(200px, 18.4vw, 311px);
     /* height: 267px; */
     background-color: #fff;
     z-index: -1;
@@ -819,7 +819,7 @@ body {
     }
 
     .sc-intro .intro-txt h2:before {
-        height: clamp(200px, 29.7vh + 5vh, 342px);
+        height: clamp(200px, 32vw, 322px);
     }
 }
 
