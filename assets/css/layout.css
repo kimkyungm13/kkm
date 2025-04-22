@@ -16,6 +16,10 @@ body.noscroll {
     overflow: hidden;
 }
 
+main {
+    overflow: hidden;
+}
+
 #header {
     position: fixed;
     top: 0;
