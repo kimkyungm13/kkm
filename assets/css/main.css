@@ -343,7 +343,7 @@ body {
     overflow: hidden;
     height: 100vh;
     display: flex;
-    font-size: clamp(90px, 11vw, 195px);
+    font-size: clamp(60px, 11vw, 195px);
     /* text-align: center; */
     font-weight: bold;
     font-family: 'dirty';
@@ -375,7 +375,7 @@ body {
 }
 
 .sc-work .title p {
-    font-size: clamp(28px, 1.9vw, 34px);
+    font-size: clamp(24px, 1.9vw, 34px);
     overflow: hidden;
     font-family: 'Helvetica';
     font-weight: bold;
