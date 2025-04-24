@@ -85,23 +85,44 @@ function preventScroll(e) {
 
 
 //반응형
-let mm = gsap.matchMedia();
-mm.add("(min-width:1025px)", () => {
-    // ScrollTrigger.refresh()
-    /** header scroll */
-    let lastScrollY = 0;
-    window.addEventListener("scroll", () => {
+const mm = gsap.matchMedia();
+
+// 1025px 이상
+mm.add("(min-width: 1025px)", () => {
+    // 헤더 스크롤 애니메이션 등록
+    const onScroll = () => {
         const currentScrollY = window.scrollY;
-        const introH = document.querySelector('.sc-intro').offsetHeight;
+        const introH = document.querySelector(".sc-intro").offsetHeight;
         if (currentScrollY < introH) {
-            gsap.to("#header .logo a", { y: "100%", autoAlpha: 0, 'transform': 'scale(1)' });
+            gsap.to("#header .logo a", {
+                y: "100%",
+                autoAlpha: 0,
+                transform: "scale(1)",
+            });
         } else {
             gsap.to("#header .logo a", { y: "0%", autoAlpha: 1 });
         }
-        lastScrollY = introH;
-    });
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => {
+        window.removeEventListener("scroll", onScroll);
+        ScrollTrigger.refresh();
+    };
+});
 
+mm.add("(max-width: 1024px)", () => {
+    gsap.set("#header .logo a", { y: "0%", autoAlpha: 1 });
+    return () => {
+        // nothing to clean up here
+    };
 })
+mm.add("(max-width:768px", () => {
+    gsap.set("#header .logo a", { autoAlpha: 0 });
+
+});
+
+// 초기 강제 리프레시 (필요시)
+ScrollTrigger.refresh();
 
 /** sc-desc */
 //desc 글자단위로 split
@@ -317,7 +338,7 @@ const lastTl = gsap.timeline({
     },
 });
 lastTl.to('#footer .logo-txt', {
-    yPercent: -100,
+    'transform': 'translateY(0%)',
     duration: 1,
     opacity: 1
 },).to('#header .logo a', {

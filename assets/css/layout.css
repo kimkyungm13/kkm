@@ -32,19 +32,16 @@ body.noscroll {
     opacity: 0;
     visibility: hidden;
     width: 100%;
+    padding: 0 15px;
 }
 
 #header .nav {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 20px;
 }
 
 #header .logo {
-    position: absolute;
-    top: 0;
-    left: 20px;
     pointer-events: auto;
     overflow: hidden;
 
@@ -278,7 +275,7 @@ body.noscroll {
 
 
 #footer .logo-txt {
-    font-size: clamp(43px, 5vw, 80px);
+    font-size: clamp(50px, 5vw, 60px);
     font-weight: bold;
     line-height: 1;
     position: relative;
@@ -291,6 +288,9 @@ body.noscroll {
 }
 
 @media screen and (max-width: 1024px) {
+    #header .nav {
+        padding: 0 15px
+    }
 
     #header .menu {
         margin-right: 0;
