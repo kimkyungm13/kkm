@@ -371,7 +371,7 @@ body {
     font-weight: bold;
     width: 50%;
     padding-left: 1.3em;
-    letter-spacing: -0.6px;
+    letter-spacing: -0.03em;
 }
 
 .sc-work .title span {
@@ -859,6 +859,10 @@ body {
 
     .sc-intro .intro-txt .title {
         position: relative;
+    }
+
+    .sc-work .title {
+        padding: 6vh 0;
     }
 
     .sc-work .title p {
