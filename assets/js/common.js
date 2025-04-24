@@ -312,7 +312,7 @@ const lastTl = gsap.timeline({
         start: '0% 80%',
         end: '100%, 100%',
         scrub: 0,
-        markers: true,
+        // markers: true,
         ease: "power1.in",
     },
 });
