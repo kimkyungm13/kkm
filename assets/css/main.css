@@ -63,7 +63,7 @@ body {
 .sc-intro .txt-wrap {
     display: flex;
     position: relative;
-    padding: 0 35px;
+    padding: 0 3vw;
     background: #fff;
     height: 100%;
 }
@@ -78,27 +78,12 @@ body {
     z-index: 4;
 }
 
-
-.sc-intro .title .line-wrap {
-    overflow: hidden;
-}
-
-.sc-intro .title .line {
-    transform: translateY(100%);
-    overflow: hidden;
-    display: inline-block;
-    opacity: 0;
-    visibility: hidden
-}
-
-
-
 .sc-intro .title {
     position: absolute;
-    font-size: clamp(27px, 2.5vw, 55px);
+    font-size: clamp(28px, 3.4vw, 40px);
     font-weight: bold;
     font-family: 'Helvetica';
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     line-height: 1.02;
     z-index: 3;
     right: 0;
@@ -117,6 +102,21 @@ body {
     z-index: -1;
     transition: height 0.3s
 }
+
+.sc-intro .title .line-wrap {
+    overflow: hidden;
+}
+
+.sc-intro .title .line {
+    transform: translateY(100%);
+    overflow: hidden;
+    display: inline-block;
+    opacity: 0;
+    visibility: hidden
+}
+
+
+
 
 .sc-intro .intro-txt .btn-link {
     display: flex;
@@ -160,7 +160,7 @@ body {
     width: 100%;
     height: 100%;
     background: #151515;
-    opacity: .8;
+    opacity: .6;
     pointer-events: none;
     z-index: 2;
 }
@@ -193,8 +193,8 @@ body {
     position: relative;
 }
 
-.relative .sc-intro,
-.relative .sc-desc {
+.sc-intro,
+.sc-desc {
     position: sticky;
     top: 0
 }
@@ -242,25 +242,15 @@ body {
 }
 
 .sc-desc .about-txt h2 {
-    overflow: hidden;
     width: 140px;
 }
 
-.sc-desc .about-txt h2 span {
-    width: 200px;
-    transform: translateY(100%);
-    display: block;
-}
-
-.sc-desc .about-txt .txt-wrapper {}
 
 .sc-desc .about-txt p .oh {
-    transform: translateY(100%);
     display: block;
 }
 
 .sc-desc .about-txt p {
-    overflow: hidden;
     font-size: 20px;
     font-weight: 600;
     color: #7c7c7c;
@@ -815,7 +805,7 @@ body {
     }
 
     .sc-intro .intro-txt .title:before {
-        height: clamp(200px, 32vw, 322px);
+        height: clamp(200px, 32vw, 327px);
     }
 }
 
@@ -824,6 +814,7 @@ body {
 
     .sc-intro {
         height: 100vh;
+        position: relative;
     }
 
     .sc-intro .intro-wrap {
@@ -891,7 +882,7 @@ body {
         top: 50%;
         transform: translateY(-50%);
         left: 3vw;
-    } */
+        } */
 
     .sc-work .m-title {
         position: sticky;
@@ -908,7 +899,7 @@ body {
         width: 100%;
         /* margin: 30px auto; */
         /* opacity: 0;
-        visibility: hidden; */
+            visibility: hidden; */
     }
 
     .sc-work .m-title.show {
@@ -917,14 +908,14 @@ body {
     }
 
     /* .sc-work .m-title .num,
-    .sc-work .m-title h3,
-    .sc-work .m-title h4,
-    .sc-work .m-title h5 {
-        transform: translateY(100%);
-        transition: transform 0.7s;
-        display: block;
-        text-transform: uppercase;
-    } */
+        .sc-work .m-title h3,
+        .sc-work .m-title h4,
+        .sc-work .m-title h5 {
+            transform: translateY(100%);
+            transition: transform 0.7s;
+            display: block;
+            text-transform: uppercase;
+            } */
 
 
     .sc-work .m-title.show .num,
@@ -965,13 +956,13 @@ body {
     }
 
     /* .sc-work .m-title span.num {
-        font-size: 50px;
-        font-weight: bold;
-    } */
+                font-size: 50px;
+                font-weight: bold;
+                } */
 
     .sc-work .m-title h3 {
         text-align: center;
-        font-size: 34px;
+        font-size: 24px;
         font-weight: bold;
         text-transform: uppercase;
         letter-spacing: 0.25px;
@@ -988,7 +979,6 @@ body {
 
     .sc-work .m-title h5 {
         font-size: 16px;
-        text-align: center;
         transition-delay: 0.6s;
     }
 
@@ -997,8 +987,8 @@ body {
     }
 
     /* .sc-sub {
-        padding: 0;
-    } */
+                    padding: 0;
+                    } */
 
     .sc-sub .title {
         padding: 30px;
@@ -1054,4 +1044,10 @@ body {
     }
 
 
+}
+
+@media screen and (max-width: 320px) {
+    .sc-intro .title {
+        font-size: 24px;
+    }
 }

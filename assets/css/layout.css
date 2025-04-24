@@ -88,6 +88,7 @@ body.noscroll {
     gap: 20px;
     pointer-events: auto;
     margin-right: 23vw;
+    margin-left: auto;
 }
 
 #header .menu li {}
@@ -172,7 +173,7 @@ body.noscroll {
 
 #footer .f-logo .logo-sub {
     text-transform: uppercase;
-    font-size: 35px;
+    font-size: clamp(20px, 3vw, 35px);
     line-height: 1.2;
 }
 
@@ -277,7 +278,7 @@ body.noscroll {
 
 
 #footer .logo-txt {
-    font-size: clamp(50px, 5vw, 80px);
+    font-size: clamp(43px, 5vw, 80px);
     font-weight: bold;
     line-height: 1;
     position: relative;
@@ -290,9 +291,6 @@ body.noscroll {
 }
 
 @media screen and (max-width: 1024px) {
-    main {
-        overflow: hidden;
-    }
 
     #header .menu {
         margin-right: 0;

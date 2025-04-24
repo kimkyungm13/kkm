@@ -53,7 +53,7 @@ const introBg = gsap.timeline({
 /** sc-intro */
 //시작애니메이션
 introBg.set('.sc-intro .intro-title', {
-    duration: 0.2
+    duration: 0.2, ease: "power1.in",
 }).to('.sc-intro .intro-txt .title .line', {
     transform: 'translateY(0)',
     stagger: 0.2,
@@ -62,6 +62,7 @@ introBg.set('.sc-intro .intro-title', {
 }).to('.sc-intro .intro-title', {
     duration: 1,
     '--transform': 'translateX(100%)',
+    ease: "power1.in",
 }).from('.sc-intro .logo-txt', {
     yPercent: 100
 }).to('#header', {
@@ -108,26 +109,36 @@ const descTxt = new SplitType('.sc-desc .desc', { types: 'chars', });
 gsap.to('.sc-desc .desc-wrap .desc .char', {
     scrollTrigger: {
         trigger: '.sc-desc ',
-        start: '0% 50%',
-        end: '85% 100%',
+        start: '0% 60%',
+        end: '90% 100%',
         scrub: 0,
-        // markers: true
+        // markers: true,
+        ease: "bounce.out",
     },
     stagger: 1,
     color: "#000",
 });
-
-gsap.to('.sc-desc .about-txt h2 span, .sc-desc .about-txt .txt-wrapper span', {
+gsap.from('.sc-desc .about-txt h2 span, .sc-desc .about-txt .txt-wrapper span', {
     scrollTrigger: {
         trigger: '.sc-desc .about-txt',
-        start: '0% 80%',
-        end: '100% 80%',
-        stagger: 0.2,
+        start: '0 80%',
+        end: '100% 100%',
         scrub: 0,
         // markers: true
     },
-    y: 0
+    autoAlpha: 0
 })
+// gsap.to('.sc-desc .about-txt h2 span, .sc-desc .about-txt .txt-wrapper span', {
+//     scrollTrigger: {
+//         trigger: '.sc-desc .about-txt',
+//         start: '0% 80%',
+//         end: '100% 80%',
+//         stagger: 0.2,
+//         scrub: 0,
+//         markers: true
+//     },
+//     y: 0
+// })
 
 
 /** sc-work title */
@@ -298,15 +309,17 @@ window.addEventListener("resize", ScrollTrigger.update);
 const lastTl = gsap.timeline({
     scrollTrigger: {
         trigger: '#footer',
-        start: '0% 70%',
+        start: '0% 80%',
         end: '100%, 100%',
         scrub: 0,
-        // markers: true,
+        markers: true,
+        ease: "power1.in",
     },
 });
 lastTl.to('#footer .logo-txt', {
     yPercent: -100,
-    duration: 1
+    duration: 1,
+    opacity: 1
 },).to('#header .logo a', {
     yPercent: 100,
     duration: 1
