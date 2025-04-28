@@ -1,6 +1,17 @@
 //스크롤 위치 복원 비활
 history.scrollRestoration = "manual";
 
+//GA
+document.querySelectorAll('a[data-site]').forEach(function (link) {
+    link.addEventListener('click', function () {
+        const siteName = link.getAttribute('data-site');
+        gtag('event', siteName + '_click', {
+            event_category: 'portfolio_site',
+            event_label: siteName + ' 방문'
+        });
+    });
+});
+
 //GSAP Plugins
 gsap.registerPlugin(ScrollTrigger);
 
