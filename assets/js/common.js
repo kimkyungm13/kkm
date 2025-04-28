@@ -5,7 +5,6 @@ history.scrollRestoration = "manual";
 document.querySelectorAll('a[data-site]').forEach(function (link) {
     link.addEventListener('click', function () {
         const siteName = link.getAttribute('data-site');
-        console.log('클릭 이벤트 발생', siteName);
         gtag('event', siteName + '_click', {
             event_category: 'portfolio_site',
             event_label: siteName + ' 방문'
